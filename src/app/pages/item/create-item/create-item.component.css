@@ -1,0 +1,40 @@
+#tipo{
+    height: 37px;
+    width: 206px;
+}
+#chkStatus{
+    margin-top: 49px;
+    margin-left: 159px;
+}
+#chkStatusDec{
+    margin-top: 42px;
+    margin-left: 163px;
+}
+
+
+img {
+    vertical-align: middle;
+    border-style: none;
+    height: 156px;
+    width: 372px;
+    margin-top: 11px;
+}
+
+.logoN{
+    display: block;
+    position: absolute;
+    z-index: 99;
+    top: 0px;
+    right: 0px;
+    width: 424px;
+    height: 156px;
+  }
+  
+  .logoN img {
+  /* max-width: 83%;
+  max-height: 100%; */
+  background-color: #FFF;
+  border-radius: 6px;
+  /* padding: 12px 15px; */
+
+  }

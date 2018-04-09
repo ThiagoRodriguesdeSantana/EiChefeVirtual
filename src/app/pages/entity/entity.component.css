@@ -1,0 +1,51 @@
+#botaoAddTel{
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
+}
+.cardFone{
+    background-color: blue;
+}
+.card{
+
+    margin-top: 11px;
+    margin-left: 20px;
+}
+.card-body{
+    margin-top: 10px;
+}
+#btnImagem{
+    height: 40px;
+    width: 100px;
+}
+#imputArquivo{
+}
+
+
+
+img {
+    vertical-align: middle;
+    border-style: none;
+    height: 156px;
+    width: 372px;
+    margin-top: 11px;
+}
+
+.logoN{
+    display: block;
+    position: absolute;
+    z-index: 99;
+    top: 0px;
+    right: 0px;
+    width: 424px;
+    height: 156px;
+  }
+  
+  .logoN img {
+  background-color: #FFF;
+  border-radius: 6px;
+  }
+  #nomeRep{
+      width: 94%;
+  }
+
+

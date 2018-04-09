@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <form #item="ngForm" (ngSubmit)="saveItem(item)">
+    
+    <input type="hidden" 
+    name="$key" #$key="ngModel" 
+    [(ngModel)]="entityService.itemSelected.$key">
+
+    <div class="row col-md-12">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="form-group col-md-5">
+            <label>Codigo do item</label>
+            <input class="form-control" (blur)="getItemByCode()" 
+                name="codigo" [(ngModel)]="entityService.itemSelected.codigo"
+              placeholder="Código" required>
+          </div>
+        </div>
+
+        <div class="row col-md-12">
+          <label>Descrição do item</label>
+          <input class="form-control" name="descricao" [(ngModel)]="entityService.itemSelected.descricao" placeholder="Descrição" required>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <label>Preço</label>
+            <input class="form-control" name="preco" [(ngModel)]="entityService.itemSelected.preco" placeholder="Preço" required>
+          </div>
+
+          <div class="col-md-4">
+            <label>Tipo</label>
+            <br>
+            <select name="" id="tipo" (change)="selectType($event)">
+              <option id="tipo" *ngFor="let item of tipos">
+                {{item}}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-check col-md-4">
+            <input 
+              type="checkbox" 
+              class="form-check-input" 
+              id="chkStatus"
+              [checked]="entityService.itemSelected.status" (change)="entityService.itemSelected.status = !entityService.itemSelected.status" >
+            <label class="form-check-label" for="chkStatus" id="chkStatusDec">Ativo</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 logoN">
+        <label>Item</label>
+        <br>
+        <app-upload-imagem (url)="getUrlImage($event)"></app-upload-imagem>
+        <img src="{{entityService.itemSelected.imagem}}" class="" alt="">
+      </div>
+    </div>
+
+    <br>
+    <br>
+    <div class="row col-md-12">
+      <div class="btn-group col-md-3" role="group">
+        <button class="btn btn-default" type="submit">
+          Salvar </button>
+      </div>
+    </div>
+    <br>
+    <br>
+  </form>
+</div>

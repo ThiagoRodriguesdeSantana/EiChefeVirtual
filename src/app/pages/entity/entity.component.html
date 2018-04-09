@@ -1,0 +1,249 @@
+<div class="container-fluid">
+  <form #entityFom="ngForm" (ngSubmit)="save(entityFom)">
+
+    <input 
+        type="hidden" 
+        name="$key" 
+        #$key="ngModel" 
+        [(ngModel)]="entityService.entitySelected.$key">
+
+    <div class="row col-md-12">
+      <div class="col-md-8">
+        <div class="row">
+          <div class="form-group col-md-5">
+            <label>CNPJ</label>
+            <input
+              class="form-control" 
+              (blur)="validateCnpj()"
+              name="cnpj" 
+              [(ngModel)]="entityService.entitySelected.cnpj" 
+              placeholder="CNPJ"
+              required>
+            <div *ngIf="!cnpjValid" class="alert alert-danger">
+              <span>CNPJ Inválido!</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row col-md-12">
+          <label>Razão social</label>
+          <input 
+           class="form-control" 
+           name="razaoSocial" 
+           [(ngModel)]="entityService.entitySelected.razaoSocial" 
+           placeholder="Razão Social"
+           required>
+        </div>
+      </div>
+
+      <div class="col-md-4 logoN">
+          <label>Logo-Marca</label>
+            <br>
+           <app-upload-image-page (url)="getImage($event)"></app-upload-image-page>
+           <img src="{{entityService.entitySelected.logo}}" class="" alt="">    
+      </div>
+    </div>
+
+
+
+    <div class="row col-md-12">
+
+      <div class="form-group col-md-3">
+        <label>CPF</label>
+        <input 
+          class="form-control" 
+          (blur)="validateCpf()" 
+          name="cpfDoResponsavel" 
+          [(ngModel)]="entityService.entitySelected.cpfDoResponsavel"
+          placeholder="CPF do responsável" 
+          required>
+        <div *ngIf="!cpfValid" class="alert alert-danger">
+          <span>CPF inválido!</span>
+        </div>
+      </div>
+
+
+      <div class="form-group col-md-5">
+        <label>Nome do responsável</label>
+        <input
+          id="nomeRep" 
+          class="form-control" 
+          name="nomeDoResponsavel" 
+          [(ngModel)]="entityService.entitySelected.nomeDoResponsavel" 
+          placeholder="Nome do responsável"
+          required>
+      </div>
+    </div>
+
+
+
+    <div class="row col-md-12">
+
+      <div class="form-group col-md-2">
+        <label>CEP</label>
+        <input 
+          class="form-control" 
+          (blur)="getAdressByCEP()" 
+          name="cep" 
+          [(ngModel)]="entityService.entitySelected.cep" 
+          placeholder="CEP"
+          required>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label>Rua</label>
+        <input 
+          class="form-control" 
+          name="rua" 
+          [(ngModel)]="entityService.entitySelected.rua" 
+          placeholder="Rua" 
+          required>
+      </div>
+
+      <div class="form-group  col-md-6">
+        <label>Bairro</label>
+        <input 
+          class="form-control" 
+          name="bairro" 
+          [(ngModel)]="entityService.entitySelected.bairro" 
+          placeholder="Bairro" 
+          required>
+      </div>
+
+    </div>
+
+    <div class="row col-md-12">
+
+
+
+      <div class="form-group  col-md-5">
+        <label>Complemento</label>
+        <input 
+          class="form-control" 
+          name="complemento" 
+          [(ngModel)]="entityService.entitySelected.complemento" 
+          placeholder="Complemento"
+          required>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label>Cidade</label>
+        <input 
+          class="form-control" 
+          name="cidade" 
+          [(ngModel)]="entityService.entitySelected.cidade" 
+          placeholder="Cidade" 
+          required>
+      </div>
+
+      <div class="form-group col-md-1">
+        <label>UF</label>
+        <input 
+          class="form-control" 
+          name="estado" 
+          [(ngModel)]="entityService.entitySelected.estado" 
+          placeholder="UF" 
+          required>
+      </div>
+
+    </div>
+
+
+    <div class="row col-md-12">
+
+      <div class="form-group col-md-3">
+        <label>Telefone</label>
+        <div class="input-group mb-3 form-group">
+          <input 
+            class="form-control" 
+            (keyup)="maskPhone($event)" 
+            (blur)="validatePhone()" 
+            name="numero" 
+            [(ngModel)]="phoneNumber"
+            placeholder="Número" 
+            required>
+          <div class="input-group-append">
+            <button 
+            class="btn btn-outline-secondary" 
+            (click)="addPhone()" 
+            type="button">+</button>
+          </div>
+          <div class="input-group-append" *ngIf="indexList >= 0">
+            <button 
+            class="btn btn-outline-secondary" 
+            (click)="removePhone()" 
+            type="button">-</button>
+          </div>
+        </div>
+      </div>
+
+
+      <ul class="list-inline">
+        <li class="list-inline-item" *ngFor="let item of entityService.entitySelected.telefones; let i = index">
+          <div class="card">
+            <div class="card-body" (click)="selectedLine(item, i)">
+              <h4 class="card-title">{{item}}</h4>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+    <div class="row col-md-12">
+      <div *ngIf="!validPhone" class="alert alert-danger col-md-12">
+        <span>Telefone inválido</span>
+      </div>
+    </div>
+
+    <div class="row col-md-12" *ngIf="entityService.entitySelected.$key == null">
+
+      <div class="form-group col-md-4">
+        <label>E-mail</label>
+        <input 
+          class="form-control" 
+          type="email" 
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" 
+          name="email" 
+          [(ngModel)]="entityService.entitySelected.login.email"
+          placeholder="E-mail" required>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label>Senha</label>
+        <input 
+          class="form-control" 
+          type="password" 
+          name="senha"
+          [(ngModel)]="entityService.entitySelected.login.password" 
+          placeholder="senha" required>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label>Confirmar Senha</label>
+        <input 
+          class="form-control" 
+          type="password" 
+          name="confirmSenha" 
+          [(ngModel)]="confirmPassword" 
+          placeholder="Confirmar senha" required>
+      </div>
+
+      <div class="row col-md-12">
+        <div *ngIf="!loginValid" class="alert alert-danger col-md-12">
+          <span>Senhas não coferem</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row col-md-12">
+      <div class="btn-group col-md-3" role="group">
+        <button class="btn btn-default" type="submit">
+          Salvar </button>
+      </div>
+
+    </div>
+
+  </form>
+</div>
+<br><br>

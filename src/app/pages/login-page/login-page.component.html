@@ -1,0 +1,33 @@
+
+<div class="login-card">
+  <h1>Logar</h1><br>
+<form (ngSubmit)="logar()">
+  <div class="row">
+      <input 
+          type="email" 
+          class="form-control" 
+          [(ngModel)]="login.email" 
+          name="user" 
+          placeholder="E-mail">
+  </div>
+  <br>
+  <div class="row">
+      <input 
+          type="password" 
+          class="form-control" 
+          [(ngModel)]="login.password" 
+          name="pass" 
+          placeholder="Senha">
+  </div>
+  <br>
+  <div class="row">
+      <input type="submit" name="login" class="login login-submit" value="Logar">
+  </div>
+
+</form>
+
+
+<div class="login-help">
+  <a href="cadastro-empresa">Cadastrar</a> • <a href="#">Esqueceu a senha</a>
+</div>
+</div>
