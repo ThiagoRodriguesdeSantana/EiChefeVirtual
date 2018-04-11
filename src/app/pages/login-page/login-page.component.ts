@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Login } from '../../models/login';
 import { CommonService } from '../../services/common-servces/common.service';
 
@@ -9,11 +10,13 @@ import { CommonService } from '../../services/common-servces/common.service';
 })
 export class LoginPageComponent implements OnInit {
 
-  login:Login = new Login();
+  login:Login;
   constructor(private service: CommonService) { }
 
   ngOnInit() {
+    this.login = new Login();
   }
+
 
   logar() {
     this.service.login(this.login);

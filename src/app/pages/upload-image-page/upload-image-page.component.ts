@@ -23,7 +23,7 @@ export class UploadImagePageComponent implements OnInit {
   getFile(event) {
     this.fileSelected = event.target.files;
     let image = this.fileSelected.item(0)
-    this.fileSelected = new Image(image);
+    this.imageSelected = new Image(image);
     this.common
       .saveImage(this.imageSelected, this.progress)
       .then((url: string) => this.url.emit(url))

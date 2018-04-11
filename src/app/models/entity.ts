@@ -6,7 +6,6 @@ export class Entity {
         this.telefones = new Array;
         this.itens = new Array<Item>();
         this.login = new Login();
-        this.logo = "";
     }
 
     $key: string;
@@ -24,6 +23,7 @@ export class Entity {
     login: Login;
     logo: string;
     itens:Item[];
+    quantityTables:number;
 
     copyTo(entity: Entity) {
         
@@ -42,6 +42,8 @@ export class Entity {
         this.login.email = entity.login.email;
         this.login.password = entity.login.password;
         this.logo = entity.logo;
+        this.itens = entity.itens;
+        this.quantityTables = entity.quantityTables;
 
         return this;
 

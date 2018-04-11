@@ -61,7 +61,10 @@ export class CreateItemComponent implements OnInit {
       || this.entityService.itemSelected.imagem == null) {
       this.entityService.itemSelected.imagem = this.entityService.entitySelected.logo;
     }
-
+    
+    if(!this.entityService.entitySelected.itens){
+      this.entityService.entitySelected.itens = new Array<Item>();
+    }
     this.entityService.entitySelected.itens.push(this.entityService.itemSelected);
     this.entityService.saveEntity(this.entityService.entitySelected);
     alert('Item salvo com sucesso');

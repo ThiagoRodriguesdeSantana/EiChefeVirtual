@@ -1,3 +1,4 @@
+
 import { Entity } from './../../models/entity';
 import { EntityService } from './../../services/db-services/entity.service';
 import { Component, OnInit } from '@angular/core';
@@ -7,6 +8,7 @@ import { CommonService } from '../../services/common-servces/common.service';
 import { Endereco } from '@brunoc/ngx-viacep';
 import { CepError } from '@brunoc/ngx-viacep';
 import { NgForm } from '@angular/forms';
+import { Convert } from '../../services/common-servces/convert';
 
 @Component({
   selector: 'app-entity',
@@ -16,12 +18,13 @@ import { NgForm } from '@angular/forms';
 export class EntityComponent implements OnInit {
 
 
-  confirmPassword:string;
+  convert:Convert;
+  confirmPassword: string;
   loginValid: any;
-  validPhone: boolean;
+  validPhone: boolean = true;
   phoneNumber: string;
-  cpfValid: boolean;
-  cnpjValid: boolean;
+  cpfValid: boolean = true;
+  cnpjValid: boolean = true;
   numberPhones: string[];
   count: number;
   indexList: number;
@@ -38,6 +41,7 @@ export class EntityComponent implements OnInit {
     var e = this.entityService.getAllEntities();
     this.numberPhones = this.entityService.entitySelected.telefones;
     this.validateLoginUser();
+    this.convert = new Convert();
   }
 
   validateLoginUser() {
@@ -91,12 +95,15 @@ export class EntityComponent implements OnInit {
   }
 
   validatePhone() {
-    if (this.phoneNumber.length != 14) {
-      this.validPhone = false;
+    if(this.phoneNumber != ''){
+      if (this.phoneNumber.length != 14) {
+        this.validPhone = false;
+      }
+      else {
+        this.validPhone = true;
+      }
     }
-    else {
-      this.validPhone = true;
-    }
+   
   }
 
   addPhone() {
@@ -121,13 +128,20 @@ export class EntityComponent implements OnInit {
     this.indexList = index;
     this.phoneNumber = item;
   }
+  onlyNumber(event) {
+    let value = event.key as string;
+
+    this.convert.convertToNumber(value)
+    
+    this.entityService
+      .entitySelected.quantityTables = this.convert.number;
+  }
 
   save(entityFom: NgForm) {
 
-    let entitytoSave  = entityFom.value as Entity;
-    let newEntity = new Entity().copyTo(this.entityService.entitySelected);
+    let entitytoSave = entityFom.value as Entity;
+    let newEntity = new Entity().copyTo(this.entityService.entitySelected)
 
-    newEntity.telefones = this.numberPhones;
 
     this.validatePassword(entitytoSave);
     if (this.cnpjValid && this.cpfValid && this.loginValid) {
@@ -136,11 +150,14 @@ export class EntityComponent implements OnInit {
     alert('Salvo com sucesso!');
   }
 
-  validatePassword(entity:Entity){
+  validatePassword(entity: Entity) {
     if (entity.$key == null) {
       this.loginValid =
         this.validate
           .validateLogin(this.entityService.entitySelected.login.password, this.confirmPassword);
+    }
+    else{
+      this.loginValid = entity.$key != null;
     }
   }
 

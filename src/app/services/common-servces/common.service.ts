@@ -1,5 +1,5 @@
 import { Image } from './../../models/image';
-
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Injectable } from '@angular/core';
 import { Login } from '../../models/login';
 import { Router, UrlSegment, ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
@@ -9,12 +9,15 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class CommonService {
 
+
+   
     basePath = 'imagens';
     urlImage: string;
     private email = new BehaviorSubject<string>('');
     email$ = this.email.asObservable();
 
-    constructor(private route: Router) {
+    constructor(private firebaseDb: AngularFireDatabase,
+        private route: Router) {
         this.onAlterStatusUser();
     }
 
@@ -95,6 +98,8 @@ export class CommonService {
             );
         });
     }
+
+  
 
 
 

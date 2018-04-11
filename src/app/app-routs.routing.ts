@@ -3,6 +3,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { HomeComponent } from './pages/home/home.component';
 import { EntityComponent } from './pages/entity/entity.component';
 import { ItemComponent } from './pages/item/item.component';
+import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
@@ -11,4 +12,9 @@ const routes: Routes = [
   { path: 'cadastro-item', component: ItemComponent }
 ];
 
-export const AppRoutsRoutes = RouterModule.forChild(routes);
+@NgModule({
+  exports: [ RouterModule ],
+  imports: [ RouterModule.forRoot(routes) ]
+})
+
+export class AppRoutsRoutes{}

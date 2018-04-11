@@ -97,7 +97,8 @@ export class EntityService {
             estado: entity.estado,
             telefones: entity.telefones,
             login: entity.login,
-            logo: entity.logo
+            logo: entity.logo,
+            quantidadeDeMesas: entity.quantityTables
         });
     }
 
@@ -114,9 +115,9 @@ export class EntityService {
             cidade: entity.cidade,
             estado: entity.estado,
             telefones: entity.telefones,
-            login: entity.login,
             logo: entity.logo,
-            itens: entity.itens
+            itens: entity.itens,
+            quantidadeDeMesas: entity.quantityTables
         });
     }
     deletEntityById($key: string) {
