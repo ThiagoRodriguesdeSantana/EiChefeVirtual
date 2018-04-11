@@ -98,7 +98,7 @@ export class EntityService {
             telefones: entity.telefones,
             login: entity.login,
             logo: entity.logo,
-            quantidadeDeMesas: entity.quantityTables
+            quantidadeDeMesas: entity.quantidadeDeMesas
         });
     }
 
@@ -117,7 +117,7 @@ export class EntityService {
             telefones: entity.telefones,
             logo: entity.logo,
             itens: entity.itens,
-            quantidadeDeMesas: entity.quantityTables
+            quantidadeDeMesas: entity.quantidadeDeMesas
         });
     }
     deletEntityById($key: string) {
@@ -126,7 +126,5 @@ export class EntityService {
 
     removeItem(arg0: any): any {
         throw new Error("Method not implemented.");
-      }
-
-
+    }
 }

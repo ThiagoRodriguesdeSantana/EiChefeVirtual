@@ -23,7 +23,7 @@ export class Entity {
     login: Login;
     logo: string;
     itens:Item[];
-    quantityTables:number;
+    quantidadeDeMesas:number;
 
     copyTo(entity: Entity) {
         
@@ -43,7 +43,7 @@ export class Entity {
         this.login.password = entity.login.password;
         this.logo = entity.logo;
         this.itens = entity.itens;
-        this.quantityTables = entity.quantityTables;
+        this.quantidadeDeMesas = entity.quantidadeDeMesas;
 
         return this;
 

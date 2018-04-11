@@ -10,7 +10,6 @@ import { Item } from '../../../models/item';
 })
 export class ListItemComponent implements OnInit {
 
-  entity: Entity;
   constructor(private entityService:EntityService) { }
 
   ngOnInit() {
@@ -18,6 +17,7 @@ export class ListItemComponent implements OnInit {
   }
 
   editItem(item: Item) {
+    alert('entrou')
     this.entityService.itemSelected = Object.assign({}, item);
   }
   removeItem(id: string){

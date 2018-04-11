@@ -134,7 +134,7 @@ export class EntityComponent implements OnInit {
     this.convert.convertToNumber(value)
     
     this.entityService
-      .entitySelected.quantityTables = this.convert.number;
+      .entitySelected.quantidadeDeMesas = this.convert.number;
   }
 
   save(entityFom: NgForm) {

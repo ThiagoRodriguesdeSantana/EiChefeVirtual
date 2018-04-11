@@ -25,7 +25,7 @@ export class CreateItemComponent implements OnInit {
   }
 
   getEntity() {
-    if(!this.entityService.entitySelected.$key){
+    if (!this.entityService.entitySelected.$key) {
       this.entityService.entityLoeaded$.subscribe(ent => {
         if (!ent.$key) {
           this.entityService.loadEntity();
@@ -34,15 +34,15 @@ export class CreateItemComponent implements OnInit {
         this.entityService.entitySelected = ent;
       });
     }
-    
+
   }
   getItemByCode() {
     let item = this.entityService.entitySelected.itens
-    .find(c => c.codigo == this.entityService.itemSelected.codigo);
+      .find(c => c.codigo == this.entityService.itemSelected.codigo);
     this.entityService.itemSelected = item != null ? item : new Item();
   }
-  selectType(event){
-    this.entityService.itemSelected.tipo = event;
+  selectType(event) {
+    this.entityService.itemSelected.tipo = event.target.value;
   }
 
   saveItem(itemForm: NgForm) {
@@ -51,6 +51,7 @@ export class CreateItemComponent implements OnInit {
     if (!this.entityService.entitySelected.$key) {
       return;
     }
+
 
     if (this.entityService.itemSelected.tipo == ''
       || this.entityService.itemSelected.tipo == null) {
@@ -61,12 +62,21 @@ export class CreateItemComponent implements OnInit {
       || this.entityService.itemSelected.imagem == null) {
       this.entityService.itemSelected.imagem = this.entityService.entitySelected.logo;
     }
-    
-    if(!this.entityService.entitySelected.itens){
+
+    if (!this.entityService.entitySelected.itens) {
       this.entityService.entitySelected.itens = new Array<Item>();
     }
-    this.entityService.entitySelected.itens.push(this.entityService.itemSelected);
-    this.entityService.saveEntity(this.entityService.entitySelected);
+
+    if (this.entityService.itemSelected.$key) {
+      let itemToUpdate = this.entityService
+        .entitySelected.itens.find(c => c.$key == this.entityService.itemSelected.$key);
+      itemToUpdate = this.entityService.itemSelected;
+
+    } else {
+      this.entityService.entitySelected.itens.push(this.entityService.itemSelected);
+      this.entityService.saveEntity(this.entityService.entitySelected);
+    }
+
     alert('Item salvo com sucesso');
     this.entityService.itemSelected = new Item();
   }
@@ -74,5 +84,4 @@ export class CreateItemComponent implements OnInit {
   getUrlImage(event) {
     this.entityService.itemSelected.imagem = event;
   }
-
 }
