@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { Entity } from './../../models/entity';
 import { Injectable } from '@angular/core';
 import { reject } from 'q';
@@ -5,20 +6,22 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { CommonService } from '../common-servces/common.service';
 import { Item } from '../../models/item';
+import { EntityValidate } from '../validates/entity-validate';
 @Injectable()
 export class EntityService {
-
 
 
     itemSelected: Item;
     private entity = new BehaviorSubject<Entity>(new Entity());
     entityLoeaded$ = this.entity.asObservable();
+    validate: EntityValidate;
 
     entitySelected: Entity;
     entities: AngularFireList<any>;
 
     constructor(private firebaseDb: AngularFireDatabase, private common: CommonService) {
         this.entitySelected = new Entity();
+        this.validate = EntityValidate.getInstance();
     }
     getAllEntities() {
         this.entities = this.firebaseDb.list('empresas');
@@ -124,7 +127,52 @@ export class EntityService {
         this.entities.remove($key);
     }
 
-    removeItem(arg0: any): any {
-        throw new Error("Method not implemented.");
+    removeItem(codigo: string) {
+        let itemToRemove = this.getItemFromList(codigo);
+        let newList = new Array<Item>();
+        this.entitySelected.itens.forEach(c => {
+            if (c.codigo != itemToRemove.codigo) {
+                newList.push(c);
+            }
+        })
+
+        this.entitySelected.itens = new Array<Item>();
+        this.entitySelected.itens = newList;
+    }
+
+    saveItens(): any {
+
+        if (!this.entitySelected.$key) {
+            return;
+        }
+
+        this.setImegeIfNull();
+
+        if (!this.entitySelected.itens) {
+            this.entitySelected.itens = new Array<Item>();
+        }
+
+        let itemToUpdate = this.getItemFromList(this.itemSelected.codigo);
+
+        if (itemToUpdate) {
+            var index = this.entitySelected.itens.indexOf(itemToUpdate);
+            this.entitySelected.itens[index] = this.itemSelected;
+        } else {
+            this.entitySelected.itens.push(this.itemSelected);
+        }
+
+        this.saveEntity(this.entitySelected);
+    }
+
+    private setImegeIfNull() {
+        if (this.itemSelected.imagem == ''
+            || this.itemSelected.imagem == null) {
+            this.itemSelected.imagem = this.entitySelected.logo;
+        }
+    }
+
+    getItemFromList(codigo: string): Item {
+        return this.entitySelected.itens
+            .find(c => c.codigo == codigo);
     }
 }

@@ -13,6 +13,9 @@
             <input class="form-control" (blur)="getItemByCode()" 
                 name="codigo" [(ngModel)]="entityService.itemSelected.codigo"
               placeholder="Código" required>
+              <div *ngIf="noInfCodeItem" class="alert alert-danger">
+                <span>Deve ser informado um código para o item</span>
+              </div>
           </div>
         </div>
 

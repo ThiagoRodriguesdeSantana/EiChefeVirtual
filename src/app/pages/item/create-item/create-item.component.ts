@@ -14,6 +14,8 @@ export class CreateItemComponent implements OnInit {
 
 
   tipos: string[];
+  noInfCodeItem: boolean;
+  noInfDescItem: boolean;
   constructor(private entityService: EntityService,
     private common: CommonService) { }
 
@@ -37,9 +39,19 @@ export class CreateItemComponent implements OnInit {
 
   }
   getItemByCode() {
+
+    if (!this.entityService.itemSelected.codigo) {
+      this.entityService.itemSelected = new Item();
+      return;
+    }
+
     let item = this.entityService.entitySelected.itens
       .find(c => c.codigo == this.entityService.itemSelected.codigo);
-    this.entityService.itemSelected = item != null ? item : new Item();
+
+    if (item) {
+      this.entityService.itemSelected = item
+    }
+
   }
   selectType(event) {
     this.entityService.itemSelected.tipo = event.target.value;
@@ -47,36 +59,18 @@ export class CreateItemComponent implements OnInit {
 
   saveItem(itemForm: NgForm) {
 
-    var item = itemForm.value;
-    if (!this.entityService.entitySelected.$key) {
-      return;
-    }
-
-
     if (this.entityService.itemSelected.tipo == ''
       || this.entityService.itemSelected.tipo == null) {
       this.entityService.itemSelected.tipo = this.tipos[0];
     }
-
-    if (this.entityService.itemSelected.imagem == ''
-      || this.entityService.itemSelected.imagem == null) {
-      this.entityService.itemSelected.imagem = this.entityService.entitySelected.logo;
+    if (!this.entityService.itemSelected.codigo) {
+      this.noInfCodeItem = false;
     }
 
-    if (!this.entityService.entitySelected.itens) {
-      this.entityService.entitySelected.itens = new Array<Item>();
-    }
+    this.entityService.saveItens();
 
-    if (this.entityService.itemSelected.$key) {
-      let itemToUpdate = this.entityService
-        .entitySelected.itens.find(c => c.$key == this.entityService.itemSelected.$key);
-      itemToUpdate = this.entityService.itemSelected;
 
-    } else {
-      this.entityService.entitySelected.itens.push(this.entityService.itemSelected);
-      this.entityService.saveEntity(this.entityService.entitySelected);
-    }
-
+    this.entityService.saveEntity(this.entityService.entitySelected);
     alert('Item salvo com sucesso');
     this.entityService.itemSelected = new Item();
   }

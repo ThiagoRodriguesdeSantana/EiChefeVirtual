@@ -17,7 +17,6 @@ export class ListItemComponent implements OnInit {
   }
 
   editItem(item: Item) {
-    alert('entrou')
     this.entityService.itemSelected = Object.assign({}, item);
   }
   removeItem(id: string){

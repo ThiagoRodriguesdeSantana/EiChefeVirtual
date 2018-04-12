@@ -1,5 +1,6 @@
 export class EntityValidate {
 
+ 
     private static entityValidate: EntityValidate;
 
     private constructor() {
