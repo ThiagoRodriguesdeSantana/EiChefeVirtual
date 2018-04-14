@@ -1,35 +1,45 @@
 <div class="container-fluid">
-  <table class="table table-sm table-hover">
-      <thead>
-          <tr>
+    <div class="row col-md-5">
+        <label>Buscar pela descrição</label>
+        <input 
+            class="form-control" 
+            name="search" 
+            [(ngModel)]="search"
+            (keyup)="getItemByDesctiption($event)" 
+            placeholder="Busca" required>
+    </div>
+    <br><br>
+    <table class="table table-sm table-hover">
+        <thead>
+            <tr>
 
-              <th scope="col">Código</th>
-              <th style="display: none;" scope="col">Id</th>
-              <th scope="col">Descricao</th>
-              <th scope="col">Preço</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Ativo</th>
-              <th scope="col">Editar/Remover</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let item of entityService.entitySelected.itens">
+                <th scope="col">Código</th>
+                <th style="display: none;" scope="col">Id</th>
+                <th scope="col">Descricao</th>
+                <th scope="col">Preço</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Ativo</th>
+                <th scope="col">Editar/Remover</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of entityService.entitySelected.itens">
 
-              <th scope="row">{{item.codigo}}</th>
-              <td style="display: none;">{{item.$key}}</td>
-              <td>{{item.descricao}}</td>
-              <td>{{item.preco}}</td>
-              <td>{{item.tipo}}</td>
-              <td>{{item.ativo}}</td>
-              <td>
-                  <a class="btn" (click)="editItem(item)">
-                      <i class="fa fa-pencil-square-o"></i>
-                  </a>
-                  <a class="btn" (click)="removeItem(item.codigo)">
-                      <i class="fa fa-trash-o"></i>
-                  </a>
-              </td>
-          </tr>
-      </tbody>
-  </table>
+                <th scope="row">{{item.codigo}}</th>
+                <td style="display: none;">{{item.$key}}</td>
+                <td>{{item.descricao}}</td>
+                <td>{{item.preco}}</td>
+                <td>{{item.tipo}}</td>
+                <td>{{item.ativo}}</td>
+                <td>
+                    <a class="btn" (click)="editItem(item)">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </a>
+                    <a class="btn" (click)="removeItem(item.codigo)">
+                        <i class="fa fa-trash-o"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

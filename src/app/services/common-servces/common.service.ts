@@ -99,8 +99,4 @@ export class CommonService {
         });
     }
 
-  
-
-
-
 }

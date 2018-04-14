@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EntityService } from '../../services/db-services/entity.service';
 
 @Component({
   selector: 'app-item',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemComponent implements OnInit {
 
-  constructor() { }
+  constructor(private entityService:EntityService) { }
 
   ngOnInit() {
   }

@@ -1,27 +1,27 @@
 <div class="container-fluid">
   <form #item="ngForm" (ngSubmit)="saveItem(item)">
-    
-    <input type="hidden" 
-    name="$key" #$key="ngModel" 
-    [(ngModel)]="entityService.itemSelected.$key">
+
+    <input type="hidden" name="$key" #$key="ngModel" [(ngModel)]="entityService.itemSelected.$key">
 
     <div class="row col-md-12">
       <div class="col-md-8">
         <div class="row">
           <div class="form-group col-md-5">
             <label>Codigo do item</label>
-            <input class="form-control" (blur)="getItemByCode()" 
-                name="codigo" [(ngModel)]="entityService.itemSelected.codigo"
-              placeholder="Código" required>
-              <div *ngIf="noInfCodeItem" class="alert alert-danger">
-                <span>Deve ser informado um código para o item</span>
-              </div>
+            <input class="form-control" (keyup)="setValidationsFalse($event)" (blur)="getItemByCode()" name="codigo" [(ngModel)]="entityService.itemSelected.codigo" placeholder="Código"
+              required>
+            <div *ngIf="notInfCodeItem" class="alert alert-danger">
+              <span>{{errorCodItemNotInf}}</span>
+            </div>
           </div>
         </div>
 
         <div class="row col-md-12">
           <label>Descrição do item</label>
           <input class="form-control" name="descricao" [(ngModel)]="entityService.itemSelected.descricao" placeholder="Descrição" required>
+          <div *ngIf="noInfDescItem" class="alert alert-danger">
+            <span>{{errorDescriptionNotInf}}</span>
+          </div>
         </div>
 
         <div class="row">
@@ -41,11 +41,7 @@
           </div>
 
           <div class="form-check col-md-4">
-            <input 
-              type="checkbox" 
-              class="form-check-input" 
-              id="chkStatus"
-              [checked]="entityService.itemSelected.status" (change)="entityService.itemSelected.status = !entityService.itemSelected.status" >
+            <input type="checkbox" class="form-check-input" id="chkStatus" [checked]="entityService.itemSelected.status" (change)="entityService.itemSelected.status = !entityService.itemSelected.status">
             <label class="form-check-label" for="chkStatus" id="chkStatusDec">Ativo</label>
           </div>
         </div>

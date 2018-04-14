@@ -13,8 +13,11 @@ import { Item } from '../../../models/item';
 export class CreateItemComponent implements OnInit {
 
 
+
+  errorCodItemNotInf: string = "O código do item deve ser informado.";
+  errorDescriptionNotInf: string = "A descrição do item deve ser infromada.";
   tipos: string[];
-  noInfCodeItem: boolean;
+  notInfCodeItem: boolean;
   noInfDescItem: boolean;
   constructor(private entityService: EntityService,
     private common: CommonService) { }
@@ -40,11 +43,11 @@ export class CreateItemComponent implements OnInit {
   }
   getItemByCode() {
 
+
     if (!this.entityService.itemSelected.codigo) {
       this.entityService.itemSelected = new Item();
       return;
     }
-
     let item = this.entityService.entitySelected.itens
       .find(c => c.codigo == this.entityService.itemSelected.codigo);
 
@@ -53,26 +56,53 @@ export class CreateItemComponent implements OnInit {
     }
 
   }
+  validNotInfDescription() {
+    this.noInfDescItem = !this.entityService.itemSelected.descricao;
+    if (this.noInfDescItem) {
+      throw new Error(this.errorDescriptionNotInf);
+    }
+  }
+  setValidationsFalse(event) {
+    if (!this.noInfDescItem || this.notInfCodeItem) {
+      this.noInfDescItem = this.notInfCodeItem = false;
+    }
+  }
+
+  validIfInfCode() {
+    this.notInfCodeItem = !this.entityService.itemSelected.codigo;
+    if (this.notInfCodeItem) {
+      throw new Error(this.errorCodItemNotInf);
+    }
+  }
   selectType(event) {
     this.entityService.itemSelected.tipo = event.target.value;
   }
 
   saveItem(itemForm: NgForm) {
+    try {
 
-    if (this.entityService.itemSelected.tipo == ''
-      || this.entityService.itemSelected.tipo == null) {
-      this.entityService.itemSelected.tipo = this.tipos[0];
+      this.validIfInfCode();
+      this.validNotInfDescription();
+
+      if (this.entityService.itemSelected.tipo == ''
+        || this.entityService.itemSelected.tipo == null) {
+        this.entityService.itemSelected.tipo = this.tipos[0];
+      }
+
+      if (!this.entityService.itemSelected.descricao) {
+        this.noInfDescItem = true;
+        return;
+      }
+
+      this.entityService.saveItens();
+
+      this.entityService.saveEntity(this.entityService.entitySelected);
+      alert('Item salvo com sucesso');
+      this.entityService.itemSelected = new Item();
+
+    } catch (error) {
+      console.log(error);
     }
-    if (!this.entityService.itemSelected.codigo) {
-      this.noInfCodeItem = false;
-    }
-
-    this.entityService.saveItens();
-
-
-    this.entityService.saveEntity(this.entityService.entitySelected);
-    alert('Item salvo com sucesso');
-    this.entityService.itemSelected = new Item();
   }
 
   getUrlImage(event) {

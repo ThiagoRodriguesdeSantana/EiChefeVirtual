@@ -47,11 +47,11 @@ export class EntityService {
             let email = res;
             let list = Array<Entity>();
             list = [];
-            var ref = this.firebaseDb.database
+            let ref = this.firebaseDb.database
                 .ref("empresas")
                 .orderByChild("login/email")
                 .equalTo(email).on("child_added", (snapshot) => {
-                    var item = snapshot.val();
+                    let item = snapshot.val();
                     item.$key = snapshot.key;
                     list.push(item as Entity)
                     this.entitySelected = list[0];
@@ -138,6 +138,7 @@ export class EntityService {
 
         this.entitySelected.itens = new Array<Item>();
         this.entitySelected.itens = newList;
+        this.saveEntity(this.entitySelected);
     }
 
     saveItens(): any {
@@ -172,7 +173,9 @@ export class EntityService {
     }
 
     getItemFromList(codigo: string): Item {
-        return this.entitySelected.itens
-            .find(c => c.codigo == codigo);
+        if (this.entitySelected.itens) {
+            return this.entitySelected.itens
+                .find(c => c.codigo == codigo);
+        }
     }
 }
