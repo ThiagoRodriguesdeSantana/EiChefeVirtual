@@ -4,12 +4,14 @@ import { HomeComponent } from './pages/home/home.component';
 import { EntityComponent } from './pages/entity/entity.component';
 import { ItemComponent } from './pages/item/item.component';
 import { NgModule } from '@angular/core';
+import { OrderComponent } from './pages/order/order.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: 'home', component: HomeComponent },
   { path: 'cadastro-empresa', component: EntityComponent },
-  { path: 'cadastro-item', component: ItemComponent }
+  { path: 'cadastro-item', component: ItemComponent },
+  { path: 'pedido', component: OrderComponent }
 ];
 
 @NgModule({

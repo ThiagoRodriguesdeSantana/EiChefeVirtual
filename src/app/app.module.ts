@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 //ViaCep npm install @brunoc/ngx-viacep --save
 import { ViacepModule } from '@brunoc/ngx-viacep';
@@ -24,6 +24,15 @@ import { FooterPageComponent } from './pages/footer-page/footer-page.component';
 import { CreateItemComponent } from './pages/item/create-item/create-item.component';
 import { ListItemComponent } from './pages/item/list-item/list-item.component';
 
+import {
+  MatTableModule,
+  MatCheckbox,
+  MatCheckboxModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
+
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { OrderComponent } from './pages/order/order.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +45,8 @@ import { ListItemComponent } from './pages/item/list-item/list-item.component';
     FooterPageComponent,
     CreateItemComponent,
     ListItemComponent,
-    UploadImagePageComponent
+    UploadImagePageComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +54,14 @@ import { ListItemComponent } from './pages/item/list-item/list-item.component';
     AngularFireDatabaseModule,
     ViacepModule,
     AppRoutsRoutes,
-    FormsModule      
+    FormsModule,
+    NgxSpinnerModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
-  providers: [EntityService,CommonService],
+  providers: [EntityService, CommonService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

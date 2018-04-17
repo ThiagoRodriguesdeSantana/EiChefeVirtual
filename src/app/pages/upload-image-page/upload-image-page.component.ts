@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Image } from '../../models/image';
 import { CommonService } from '../../services/common-servces/common.service';
+import { NgxSpinnerService } from 'ngx-spinner';  
+
 
 
 @Component({
@@ -13,20 +15,28 @@ export class UploadImagePageComponent implements OnInit {
   @Output() url = new EventEmitter<string>();
   imageSelected: Image;
   fileSelected: any;
+  fetchingImage:boolean = false;
   progress: { percentage: number } = { percentage: 0 };
 
-  constructor(private common:CommonService) { }
+  constructor(private common:CommonService, private spinner: NgxSpinnerService) { }
 
+  public loading = false;
   ngOnInit() {
   }
 
   getFile(event) {
     this.fileSelected = event.target.files;
+    //this.spinner.show();
+    this.fetchingImage = true;
     let image = this.fileSelected.item(0)
     this.imageSelected = new Image(image);
     this.common
       .saveImage(this.imageSelected, this.progress)
-      .then((url: string) => this.url.emit(url))
+      .then((url: string)=> {
+        this.url.emit(url);
+        this.fetchingImage = false;
+        //this.spinner.hide();
+      })
       .catch(erro => console.log(erro));
   }
 

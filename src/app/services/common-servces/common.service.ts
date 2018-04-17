@@ -97,6 +97,6 @@ export class CommonService {
                 }
             );
         });
-    }
+    } 
 
 }
