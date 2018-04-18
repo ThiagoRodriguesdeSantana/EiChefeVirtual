@@ -1,3 +1,4 @@
+import { Order } from './order';
 import { Login } from "./login";
 import { Item } from "./item";
 
@@ -6,6 +7,7 @@ export class Entity {
         this.telefones = new Array;
         this.itens = new Array<Item>();
         this.login = new Login();
+        this.pedidos = new Array<Order>();
     }
 
     $key: string;
@@ -24,6 +26,7 @@ export class Entity {
     logo: string;
     itens:Item[];
     quantidadeDeMesas:number;
+    pedidos:Order[];
 
     copyTo(entity: Entity) {
         
