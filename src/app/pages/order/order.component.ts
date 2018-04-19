@@ -17,17 +17,9 @@ export class OrderComponent implements OnInit {
   selection = new SelectionModel<Order>(true, []);
   constructor(private entityService: EntityService) {
 
-    var o = new Order();
-    o.codigoDoItem = 'I0001';
-    o.descricaoDoItem = 'Torta de pessego'
-    o.pedidoEmAberto = true;
-    o.quantidadePedida = 2;
-    o.valorDoPedido = 10;
-    o.observacoes = 'Teste de lista de pedidos';
 
-    this.entityService.entitySelected.pedidos.push(o);
     this.dataSource =
-      new MatTableDataSource<Order>(this.entityService.entitySelected.pedidos);
+      new MatTableDataSource<Order>(new Array<Order>());
     this.selection = new SelectionModel<Order>(true, []);
   }
 

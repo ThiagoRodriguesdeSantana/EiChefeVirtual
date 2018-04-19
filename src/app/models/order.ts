@@ -5,5 +5,8 @@ export class Order {
     quantidadePedida:number;
     observacoes:string;
     pedidoEmAberto:boolean;
+    nomeDoCliente:string;
+    mesa:string;
+    emailDoCliente:string
 
 }

@@ -1,13 +1,13 @@
 import { Order } from './order';
 import { Login } from "./login";
 import { Item } from "./item";
+import { Tables } from './Tables';
 
 export class Entity {
     constructor() {
         this.telefones = new Array;
         this.itens = new Array<Item>();
         this.login = new Login();
-        this.pedidos = new Array<Order>();
     }
 
     $key: string;
@@ -26,7 +26,7 @@ export class Entity {
     logo: string;
     itens:Item[];
     quantidadeDeMesas:number;
-    pedidos:Order[];
+    mesas:Tables[];
 
     copyTo(entity: Entity) {
         

@@ -7,6 +7,7 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { CommonService } from '../common-servces/common.service';
 import { Item } from '../../models/item';
 import { EntityValidate } from '../validates/entity-validate';
+import { Tables } from '../../models/Tables';
 @Injectable()
 export class EntityService {
 
@@ -86,6 +87,8 @@ export class EntityService {
     }
 
     insertEntity(entity: Entity) {
+        this.generatTables(entity);
+
         this.common.addNewUser(entity.login);
         this.entities.push({
             cnpj: entity.cnpj,
@@ -178,4 +181,14 @@ export class EntityService {
                 .find(c => c.codigo == codigo);
         }
     }
+
+
+    generatTables(entity:Entity) {
+        for (let index = 0; index < entity.quantidadeDeMesas; index++) {
+            let newTable = new Tables();
+            newTable.numero = "Mesa: "+index;
+            entity.mesas.push(newTable);
+        }
+    }
+
 }

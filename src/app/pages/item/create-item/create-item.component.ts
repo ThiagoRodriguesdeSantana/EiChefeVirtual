@@ -28,6 +28,8 @@ export class CreateItemComponent implements OnInit {
     this.tipos = ['Comida', 'Bebida', 'Outros'];
     this.entityService.getAllEntities();
     this.getEntity();
+    this.selected = this.entityService.itemSelected !=null 
+                  ? this.entityService.itemSelected.tipo : 'Tipo' 
   }
 
   getEntity() {

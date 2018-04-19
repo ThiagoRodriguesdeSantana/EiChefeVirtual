@@ -50,5 +50,4 @@ export class ListItemComponent implements OnInit {
       alert('Item removido com sucesso!')
     }
   }
-
 }
