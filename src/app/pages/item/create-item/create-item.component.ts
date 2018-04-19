@@ -19,6 +19,7 @@ export class CreateItemComponent implements OnInit {
   tipos: string[];
   notInfCodeItem: boolean;
   noInfDescItem: boolean;
+  selected:string
   constructor(private entityService: EntityService,
     private common: CommonService) { }
 
@@ -74,16 +75,18 @@ export class CreateItemComponent implements OnInit {
       throw new Error(this.errorCodItemNotInf);
     }
   }
-  selectType(event) {
-    this.entityService.itemSelected.tipo = event.target.value;
-  }
+  // selectType(event) {
+  //   this.entityService.itemSelected.tipo = event.target.value;
+  // }
 
   saveItem(itemForm: NgForm) {
     try {
 
+
       this.validIfInfCode();
       this.validNotInfDescription();
 
+      this.entityService.itemSelected.tipo = this.selected;
       if (this.entityService.itemSelected.tipo == ''
         || this.entityService.itemSelected.tipo == null) {
         this.entityService.itemSelected.tipo = this.tipos[0];

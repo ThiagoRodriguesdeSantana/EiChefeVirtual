@@ -23,12 +23,14 @@ import { HeaderPageComponent } from './pages/header-page/header-page.component';
 import { FooterPageComponent } from './pages/footer-page/footer-page.component';
 import { CreateItemComponent } from './pages/item/create-item/create-item.component';
 import { ListItemComponent } from './pages/item/list-item/list-item.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   MatTableModule,
   MatCheckbox,
   MatCheckboxModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSelectModule
 } from '@angular/material';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -52,13 +54,16 @@ import { OrderComponent } from './pages/order/order.component';
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
+    BrowserAnimationsModule,
     ViacepModule,
     AppRoutsRoutes,
     FormsModule,
     NgxSpinnerModule,
     MatTableModule,
     MatCheckboxModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSelectModule
+    
   ],
   providers: [EntityService, CommonService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

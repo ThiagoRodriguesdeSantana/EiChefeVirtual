@@ -31,14 +31,16 @@
           </div>
 
           <div class="col-md-4">
-            <label>Tipo</label>
-            <br>
-            <select name="" id="tipo" (change)="selectType($event)">
-              <option id="tipo" *ngFor="let item of tipos">
-                {{item}}
-              </option>
-            </select>
-          </div>
+            <label>Tipo</label><br>
+            <mat-form-field>
+              <mat-select [(value)]="selected">
+                <mat-option>None</mat-option>
+                <mat-option value="Comida">Comida</mat-option>
+                <mat-option value="Bebida">Bebida</mat-option>
+                <mat-option value="Outros">Outros</mat-option>
+              </mat-select>
+            </mat-form-field>
+           </div>
 
           <div class="form-check col-md-4">
             <input type="checkbox" class="form-check-input" id="chkStatus" [checked]="entityService.itemSelected.status" (change)="entityService.itemSelected.status = !entityService.itemSelected.status">
