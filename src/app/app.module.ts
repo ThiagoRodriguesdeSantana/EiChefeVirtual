@@ -35,6 +35,8 @@ import {
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OrderComponent } from './pages/order/order.component';
+import { TablesListComponent } from './pages/order/tables-list/tables-list.component';
+import { OrderListComponent } from './pages/order/order-list/order-list.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { OrderComponent } from './pages/order/order.component';
     CreateItemComponent,
     ListItemComponent,
     UploadImagePageComponent,
-    OrderComponent
+    OrderComponent,
+    TablesListComponent,
+    OrderListComponent
   ],
   imports: [
     BrowserModule,

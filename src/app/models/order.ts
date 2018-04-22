@@ -1,12 +1,11 @@
+import { Item } from "./item";
+import { ItemOrder } from "./itemOrder";
+
 export class Order {
-    codigoDoItem:string;
-    descricaoDoItem:string;
-    valorDoPedido:number;
-    quantidadePedida:number;
-    observacoes:string;
+    numeroDoPedido:string;
+    itens:ItemOrder[];
     pedidoEmAberto:boolean;
     nomeDoCliente:string;
-    mesa:string;
     emailDoCliente:string
 
 }

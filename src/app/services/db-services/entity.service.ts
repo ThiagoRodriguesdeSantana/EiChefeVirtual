@@ -1,3 +1,4 @@
+import { Tables } from './../../models/Tables';
 import { element } from 'protractor';
 import { Entity } from './../../models/entity';
 import { Injectable } from '@angular/core';
@@ -7,11 +8,14 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { CommonService } from '../common-servces/common.service';
 import { Item } from '../../models/item';
 import { EntityValidate } from '../validates/entity-validate';
-import { Tables } from '../../models/Tables';
+import { Order } from '../../models/order';
 @Injectable()
 export class EntityService {
 
 
+
+    orderSelected: Order;
+    tableSelected: Tables;
     itemSelected: Item;
     private entity = new BehaviorSubject<Entity>(new Entity());
     entityLoeaded$ = this.entity.asObservable();
@@ -183,12 +187,27 @@ export class EntityService {
     }
 
 
-    generatTables(entity:Entity) {
+    generatTables(entity: Entity) {
         for (let index = 0; index < entity.quantidadeDeMesas; index++) {
             let newTable = new Tables();
-            newTable.numero = "Mesa: "+index;
+            newTable.numero = "Mesa: " + index;
             entity.mesas.push(newTable);
         }
     }
+
+    getTableByNumber(numero: string) {
+        if (this.entitySelected.mesas) {
+            this.tableSelected = this.entitySelected.mesas
+                .find(c => c.numero == numero);
+        }
+    }
+
+
+  getOrderByNumber(pedido: string) {
+    if (this.tableSelected.pedidos) {
+        this.orderSelected = this.tableSelected.pedidos
+            .find(c => c.numeroDoPedido == pedido);
+    }
+  }
 
 }

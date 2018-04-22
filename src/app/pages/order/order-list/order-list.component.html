@@ -1,0 +1,29 @@
+<div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource">
+  
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="pedidoEmAberto">
+        <mat-header-cell *matHeaderCellDef>
+          <label>Pedido em aberto</label>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="getValue(row)"
+                        (change)="$event ? selection.toggle(row) : null"
+                        [checked]="isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="numeroDoPedido">
+        <mat-header-cell *matHeaderCellDef> Número </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.numeroDoPedido}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"
+               (click)="getSelectedRow(row)">
+      </mat-row>
+    </mat-table>
+  </div>
+  
