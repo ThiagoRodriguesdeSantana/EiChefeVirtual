@@ -9,10 +9,9 @@ import { CommonService } from '../common-servces/common.service';
 import { Item } from '../../models/item';
 import { EntityValidate } from '../validates/entity-validate';
 import { Order } from '../../models/order';
+import { ItemOrder } from '../../models/itemOrder';
 @Injectable()
 export class EntityService {
-
-
 
     orderSelected: Order;
     tableSelected: Tables;
@@ -60,9 +59,60 @@ export class EntityService {
                     item.$key = snapshot.key;
                     list.push(item as Entity)
                     this.entitySelected = list[0];
+                    this.obterMesaMokada();
                     this.entity.next(this.entitySelected);
                 });
         });
+    }
+
+    obterMesaMokada() {
+        let mesas : Tables[];
+        let mesa = new Tables();
+
+        let pedidos = new Array<Order>();
+        let pedido = new Order();
+        let itens = new Array<Item>();
+        let item = new Item();
+
+        item.codigo = 'I0001';
+        item.descricao = 'Teste';
+        item.preco = 10.00;
+        item.status = true;
+        item.tipo = 'comida';
+        
+        let itemOr = new ItemOrder();
+        itemOr.item = item;
+        itemOr.antendido= true;
+        itemOr.observacao = 'obs do pedido';
+        itemOr.quantidade = 2;
+
+        let itemOr2 = new ItemOrder();
+        itemOr2.item = item;
+        itemOr2.antendido= true;
+        itemOr2.observacao = 'obs do pedido';
+        itemOr2.quantidade = 2;
+
+        pedido.numeroDoPedido = 'P0001';
+        pedido.nomeDoCliente = 'Cliente de Teste';
+        pedido.pedidoEmAberto = true;
+        pedido.itens = [];
+
+        let pedido2 = new Order();
+        pedido2.numeroDoPedido = 'P0002';
+        pedido2.nomeDoCliente = 'Cliente de Teste';
+        pedido2.pedidoEmAberto = true;
+        
+        pedido.itens.push(itemOr);
+        pedido.itens.push(itemOr2);
+        
+        mesa.numero = '01';
+        mesa.pedidos.push(pedido);
+        mesa.pedidos.push(pedido2);
+        mesa.emAberto = true;
+
+        this.entitySelected.mesas = [];
+        this.entitySelected.mesas.push(mesa);
+
     }
 
     consultarPorCnpj(): any {

@@ -3,9 +3,7 @@ export class Tables {
   
     constructor() {
         this.pedidos = new Array<Order>();
-        
     }
-    
     numero:string;
     pedidos:Order[];
     emAberto:boolean;

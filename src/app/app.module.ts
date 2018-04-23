@@ -30,13 +30,16 @@ import {
   MatCheckbox,
   MatCheckboxModule,
   MatProgressSpinnerModule,
-  MatSelectModule
+  MatSelectModule,
+  MatInputModule
 } from '@angular/material';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { OrderComponent } from './pages/order/order.component';
 import { TablesListComponent } from './pages/order/tables-list/tables-list.component';
 import { OrderListComponent } from './pages/order/order-list/order-list.component';
+import { OrderItensComponent } from './pages/order/order-itens/order-itens.component';
+import { OrderItensListComponent } from './pages/order/order-itens/order-itens-list/order-itens-list.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,9 @@ import { OrderListComponent } from './pages/order/order-list/order-list.componen
     UploadImagePageComponent,
     OrderComponent,
     TablesListComponent,
-    OrderListComponent
+    OrderListComponent,
+    OrderItensComponent,
+    OrderItensListComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +71,8 @@ import { OrderListComponent } from './pages/order/order-list/order-list.componen
     MatTableModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatInputModule
     
   ],
   providers: [EntityService, CommonService],

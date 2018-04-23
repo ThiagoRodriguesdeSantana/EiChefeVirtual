@@ -1,3 +1,39 @@
-<p>
-  order-itens works!
-</p>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput [(ngModel)]="entityService.orderSelected.numeroDoPedido">
+        </mat-form-field>
+      </div>
+      
+      <div class="col-md-6">
+        <mat-form-field>
+          <input matInput [(ngModel)]="entityService.orderSelected.nomeDoCliente">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row" *ngIf="itemSelectes">
+      <div class="col-md-3">
+        <mat-form-field>
+          <input matInput [(ngModel)]="item.codItem">
+        </mat-form-field>
+      </div>
+      <div class="col-md-9">
+        <mat-form-field>
+          <input matInput [(ngModel)]="item.descItem">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row"  *ngIf="itemSelectes">
+      <div class="col-md-10">
+        <mat-form-field>
+          <textarea matInput [(ngModel)]="item.obs"></textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-md-2">
+          <button mat-button (click)="finalize()">Finalixar</button>
+      </div>
+    </div>
+    <br>
+     <app-order-itens-list (itemOrderSelected)="itemSelected($event)"></app-order-itens-list>
+</div>

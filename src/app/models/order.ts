@@ -6,6 +6,6 @@ export class Order {
     itens:ItemOrder[];
     pedidoEmAberto:boolean;
     nomeDoCliente:string;
-    emailDoCliente:string
+    emailDoCliente:string;
 
 }

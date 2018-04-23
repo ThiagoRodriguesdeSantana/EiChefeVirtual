@@ -19,16 +19,32 @@ export class OrderComponent implements OnInit {
   table: Tables;
   
   constructor(private entityService: EntityService) {
+
   }
 
   ngOnInit() {
+    this.getEntity()
+  }
+
+  getEntity() {
+    if (!this.entityService.entitySelected.$key) {
+      this.entityService.entityLoeaded$.subscribe(ent => {
+        if (!ent.$key) {
+          this.entityService.loadEntity();
+          return;
+        }
+        this.entityService.entitySelected = ent;
+      });
+    }
 
   }
+
   tableSelected(event){
     if(event){
       this.selectedTable = true;
       this.entityService.getTableByNumber(event);
       this.table = this.entityService.tableSelected;
+      console.log(event);
     }
   }
 
@@ -36,6 +52,7 @@ export class OrderComponent implements OnInit {
     if(event){
       this.selectedOrder = true;
       this.entityService.getOrderByNumber(event);
+      console.log(this.entityService.orderSelected);
     }
   }
 }

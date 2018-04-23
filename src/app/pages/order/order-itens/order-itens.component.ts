@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { EntityService } from '../../../services/db-services/entity.service';
+import { ItemToForm } from '../modelOrderItem/item-to-form';
+import {MatInputModule} from '@angular/material/input';
 
 @Component({
   selector: 'app-order-itens',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderItensComponent implements OnInit {
 
-  constructor() { }
+  item: ItemToForm;
+  itemSelectes:boolean = false;
+  constructor(private entityService: EntityService) { }
 
   ngOnInit() {
   }
 
+  itemSelected(event) {
+    this.item = event;
+  }
 }

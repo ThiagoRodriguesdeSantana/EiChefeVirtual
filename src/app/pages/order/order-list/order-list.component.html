@@ -1,5 +1,5 @@
-<div class="example-container mat-elevation-z8">
-    <mat-table #table [dataSource]="dataSource">
+<div class="mat-elevation-z8">
+    <mat-table #table [dataSource]="entityService.tableSelected.pedidos">
   
       <!-- Checkbox Column -->
       <ng-container matColumnDef="pedidoEmAberto">
@@ -16,7 +16,7 @@
   
       <!-- Position Column -->
       <ng-container matColumnDef="numeroDoPedido">
-        <mat-header-cell *matHeaderCellDef> Número </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef><label> Número </label></mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.numeroDoPedido}} </mat-cell>
       </ng-container>
   

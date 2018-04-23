@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Item } from './../../../../models/item';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ItemToForm } from '../../modelOrderItem/item-to-form';
 import { MatTableDataSource } from '@angular/material';
-import { ItemToForm } from '../modelOrderItem/item-to-form';
 import { SelectionModel } from '@angular/cdk/collections';
+import { EntityService } from '../../../../services/db-services/entity.service';
 
 @Component({
   selector: 'app-order-itens-list',
@@ -10,27 +12,47 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class OrderItensListComponent implements OnInit {
 
-  displayedColumns = ['finalized', 'codItem','descItem','qtdItem','priceItem','obs'];
+
+  @Output() itemOrderSelected = new EventEmitter<ItemToForm>();
+
+  displayedColumns = ['finalized', 'codItem', 'descItem', 'qtdItem', 'priceItem', 'obs'];
   dataSource = new MatTableDataSource<ItemToForm>(new Array<ItemToForm>());
   selection = new SelectionModel<ItemToForm>(true, []);
-  constructor() { }
+  itensToForm = new Array<ItemToForm>();
+  itemCarregados = false;
+
+  constructor(private entityService: EntityService) { }
 
   ngOnInit() {
+    this.fillForm();
+    console.log('Entrou');
   }
 
-  isSelected(row){
-    return row.emAberto
+  fillForm() {
+    this.entityService.orderSelected.itens.forEach((item) => {
+      let itemToform = new ItemToForm();
+      itemToform.codItem = item.item.codigo;
+      itemToform.descItem = item.item.descricao;
+      itemToform.finalized = false;
+      itemToform.obs = item.observacao;
+      itemToform.priceItem = item.item.preco;
+      itemToform.qtdItem = item.quantidade;
+      this.itensToForm.push(itemToform);
+    })
   }
-  getValue(event){
+
+  isSelected(row) {
+    return row.pedidoEmAberto;
+  }
+  getValue(event) {
     console.log(event);
   }
-
   masterToggle() {
     this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-        alert('masterToggle()');
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
   }
+
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -38,8 +60,8 @@ export class OrderItensListComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  getSelectedRow(row){
-    
+  getSelectedRow(row) {
+    this.itemOrderSelected.emit(row);
   }
 
 }

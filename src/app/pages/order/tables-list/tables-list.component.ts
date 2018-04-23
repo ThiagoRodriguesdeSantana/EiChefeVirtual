@@ -19,28 +19,17 @@ export class TablesListComponent implements OnInit {
   @Output() table = new EventEmitter<string>();
   tableSelected:string;
 
-  constructor(private entityService: EntityService) { }
+  constructor(private entityService: EntityService) {
+    
+   }
 
   ngOnInit() {
 
-    let mesa = new Tables()
-    mesa.emAberto = true;
-    mesa.numero = '01';
-
-    let mesa2 = new Tables()
-    mesa2.emAberto = false;
-    mesa2.numero = '02';
-
-    let t = new Array<Tables>();
-    t.push(mesa);
-    t.push(mesa2);
-    this.dataSource = new MatTableDataSource<Tables>(t);
   }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
-    alert('isAllSelected()');
     return numSelected === numRows;
   }
 

@@ -2,6 +2,7 @@ import { Order } from './../../../models/order';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material';
+import { EntityService } from '../../../services/db-services/entity.service';
 
 @Component({
   selector: 'app-order-list',
@@ -15,14 +16,16 @@ export class OrderListComponent implements OnInit {
   displayedColumns = ['pedidoEmAberto', 'numeroDoPedido'];
   dataSource = new MatTableDataSource<Order>(new Array<Order>());
   selection = new SelectionModel<Order>(true, []);
-  constructor() { }
+
+  constructor(private entityService: EntityService) { }
 
   ngOnInit() {
+    this.entityService.tableSelected.pedidos;
   }
 
 
   isSelected(row){
-    return row.emAberto
+    return row.pedidoEmAberto
   }
   getValue(event){
     console.log(event);
