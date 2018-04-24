@@ -1,5 +1,5 @@
 import { Item } from './../../../../models/item';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ItemToForm } from '../../modelOrderItem/item-to-form';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -14,6 +14,7 @@ export class OrderItensListComponent implements OnInit {
 
 
   @Output() itemOrderSelected = new EventEmitter<ItemToForm>();
+  @Input() hero: Item;
 
   displayedColumns = ['finalized', 'codItem', 'descItem', 'qtdItem', 'priceItem', 'obs'];
   dataSource = new MatTableDataSource<ItemToForm>(new Array<ItemToForm>());
@@ -25,7 +26,6 @@ export class OrderItensListComponent implements OnInit {
 
   ngOnInit() {
     this.fillForm();
-    console.log('Entrou');
   }
 
   fillForm() {

@@ -5,7 +5,6 @@ export class Order {
     numeroDoPedido:string;
     itens:ItemOrder[];
     pedidoEmAberto:boolean;
-    nomeDoCliente:string;
     emailDoCliente:string;
-
+    horaDoPedido:Date;
 }

@@ -93,13 +93,13 @@ export class EntityService {
         itemOr2.quantidade = 2;
 
         pedido.numeroDoPedido = 'P0001';
-        pedido.nomeDoCliente = 'Cliente de Teste';
+        pedido.emailDoCliente = 'thiagorodriguescamara@gmail.com';
         pedido.pedidoEmAberto = true;
         pedido.itens = [];
 
         let pedido2 = new Order();
         pedido2.numeroDoPedido = 'P0002';
-        pedido2.nomeDoCliente = 'Cliente de Teste';
+        pedido2.emailDoCliente = 'thiagorodriguescamara@gmail.com';
         pedido2.pedidoEmAberto = true;
         
         pedido.itens.push(itemOr);

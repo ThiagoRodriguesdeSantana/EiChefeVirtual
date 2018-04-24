@@ -18,6 +18,12 @@ export class OrderItensComponent implements OnInit {
   }
 
   itemSelected(event) {
-    this.item = event;
+    if(event){
+      this.itemSelectes = true;
+      this.item = event;
+    }
+  }
+  finalize(){
+    this.item.finalized = true;
   }
 }
