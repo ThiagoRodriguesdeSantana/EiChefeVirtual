@@ -26,6 +26,7 @@ export class EntityService {
     constructor(private firebaseDb: AngularFireDatabase, private common: CommonService) {
         this.entitySelected = new Entity();
         this.validate = EntityValidate.getInstance();
+        this.reloadEntity();
     }
     getAllEntities() {
         this.entities = this.firebaseDb.list('empresas');
@@ -59,61 +60,27 @@ export class EntityService {
                     item.$key = snapshot.key;
                     list.push(item as Entity)
                     this.entitySelected = list[0];
-                    this.obterMesaMokada();
                     this.entity.next(this.entitySelected);
                 });
         });
     }
 
-    obterMesaMokada() {
-        let mesas : Tables[];
-        let mesa = new Tables();
-
-        let pedidos = new Array<Order>();
-        let pedido = new Order();
-        let itens = new Array<Item>();
-        let item = new Item();
-
-        item.codigo = 'I0001';
-        item.descricao = 'Teste';
-        item.preco = 10.00;
-        item.status = true;
-        item.tipo = 'comida';
-        
-        let itemOr = new ItemOrder();
-        itemOr.item = item;
-        itemOr.antendido= true;
-        itemOr.observacao = 'obs do pedido';
-        itemOr.quantidade = 2;
-
-        let itemOr2 = new ItemOrder();
-        itemOr2.item = item;
-        itemOr2.antendido= true;
-        itemOr2.observacao = 'obs do pedido';
-        itemOr2.quantidade = 2;
-
-        pedido.numeroDoPedido = 'P0001';
-        pedido.emailDoCliente = 'thiagorodriguescamara@gmail.com';
-        pedido.pedidoEmAberto = true;
-        pedido.itens = [];
-
-        let pedido2 = new Order();
-        pedido2.numeroDoPedido = 'P0002';
-        pedido2.emailDoCliente = 'thiagorodriguescamara@gmail.com';
-        pedido2.pedidoEmAberto = true;
-        
-        pedido.itens.push(itemOr);
-        pedido.itens.push(itemOr2);
-        
-        mesa.numero = '01';
-        mesa.pedidos.push(pedido);
-        mesa.pedidos.push(pedido2);
-        mesa.emAberto = true;
-
-        this.entitySelected.mesas = [];
-        this.entitySelected.mesas.push(mesa);
-
+    reloadEntity() {
+        var empresa = this.getAllEntities();
+        empresa.snapshotChanges().subscribe(item => {
+            let empresasList = [];
+            item.forEach(element => {
+                var empresaListada = element.payload.toJSON();
+                empresaListada["$key"] = element.key;
+                if (element.key) {
+                    this.loadEntity();
+                    return;
+                };
+            })
+        })
     }
+
+
 
     consultarPorCnpj(): any {
         let list = Array<Entity>();
@@ -129,19 +96,19 @@ export class EntityService {
         return list;
     }
 
-    saveEntity(empresa: Entity) {
-        if (empresa.logo == '' || empresa.logo == null) {
-            empresa.logo = 'gs://comandavirtual-15db8.appspot.com/undefined/help-web-button.png'
+    saveEntity(entity: Entity) {
+        this.generatTables(entity);
+        if (entity.logo == '' || entity.logo == null) {
+            entity.logo = 'gs://comandavirtual-15db8.appspot.com/undefined/help-web-button.png'
         }
-        if (empresa.$key == null) {
-            return this.insertEntity(empresa);
+        if (entity.$key == null) {
+            return this.insertEntity(entity);
         } else {
-            return this.alterEntity(empresa);
+            return this.alterEntity(entity);
         }
     }
 
     insertEntity(entity: Entity) {
-        this.generatTables(entity);
 
         this.common.addNewUser(entity.login);
         this.entities.push({
@@ -158,7 +125,8 @@ export class EntityService {
             telefones: entity.telefones,
             login: entity.login,
             logo: entity.logo,
-            quantidadeDeMesas: entity.quantidadeDeMesas
+            quantidadeDeMesas: entity.quantidadeDeMesas,
+            mesas: entity.mesas
         });
     }
 
@@ -176,8 +144,9 @@ export class EntityService {
             estado: entity.estado,
             telefones: entity.telefones,
             logo: entity.logo,
-            itens: entity.itens,
-            quantidadeDeMesas: entity.quantidadeDeMesas
+            itens: entity.itens != null ? entity.itens : new Array<Item>(),
+            quantidadeDeMesas: entity.quantidadeDeMesas,
+            mesas: entity.mesas
         });
     }
     deletEntityById($key: string) {
@@ -238,9 +207,10 @@ export class EntityService {
 
 
     generatTables(entity: Entity) {
-        for (let index = 0; index < entity.quantidadeDeMesas; index++) {
+        entity.mesas = new Array<Tables>();
+        for (let index = 1; index <= entity.quantidadeDeMesas; index++) {
             let newTable = new Tables();
-            newTable.numero = "Mesa: " + index;
+            newTable.numero = "" + index;
             entity.mesas.push(newTable);
         }
     }
@@ -253,11 +223,11 @@ export class EntityService {
     }
 
 
-  getOrderByNumber(pedido: string) {
-    if (this.tableSelected.pedidos) {
-        this.orderSelected = this.tableSelected.pedidos
-            .find(c => c.numeroDoPedido == pedido);
+    getOrderByNumber(pedido: string) {
+        if (this.tableSelected.pedidos) {
+            this.orderSelected = this.tableSelected.pedidos
+                .find(c => c.numeroDoPedido == pedido);
+        }
     }
-  }
 
 }

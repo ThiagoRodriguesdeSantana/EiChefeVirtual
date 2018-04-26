@@ -194,12 +194,11 @@
     </div>
     <div class="row col-md-12">
       <div class="form-group col-md-3">
-          <label>Telefone</label>
+          <label>Quantidade de mesas</label>
         <input 
           class="form-control" 
-          type="text"
+          type="number"
           name="quantidadeDeMesas"
-          (keyup)="onlyNumber($event)" 
           [(ngModel)]="entityService.entitySelected.quantidadeDeMesas">
       </div>
     </div>
