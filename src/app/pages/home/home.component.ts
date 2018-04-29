@@ -12,9 +12,10 @@ export class HomeComponent implements OnInit {
 
   email: string;
   entity: Entity;
+  hight:any;
   constructor(private serviceEntity: EntityService,
   private common:CommonService) {
-
+    this.hight = window.screen.height;
    }
 
   ngOnInit() {

@@ -23,7 +23,8 @@ export class EntityService {
     entitySelected: Entity;
     entities: AngularFireList<any>;
 
-    constructor(private firebaseDb: AngularFireDatabase, private common: CommonService) {
+    constructor(private firebaseDb: AngularFireDatabase, 
+        private common: CommonService) {
         this.entitySelected = new Entity();
         this.validate = EntityValidate.getInstance();
         this.reloadEntity();
@@ -223,10 +224,10 @@ export class EntityService {
     }
 
 
-    getOrderByNumber(pedido: string) {
+    getOrderByEmail(email: string) {
         if (this.tableSelected.pedidos) {
             this.orderSelected = this.tableSelected.pedidos
-                .find(c => c.numeroDoPedido == pedido);
+                .find(c => c.emailDoCliente == email);
         }
     }
 

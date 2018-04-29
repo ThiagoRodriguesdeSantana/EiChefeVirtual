@@ -51,6 +51,7 @@ export class CommonService {
             }
         });
     }
+    
     addNewUser(login: Login) {
         let email = login.email;
         let senha = login.password;

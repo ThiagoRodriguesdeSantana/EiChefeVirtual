@@ -1,37 +1,28 @@
-<div class="container-fluid">
-    <div class="row">
-      <div class="col-md-6">
-        <label>Pedido</label><br>
-        <mat-form-field>
-          <input disabled matInput [(ngModel)]="entityService.orderSelected.numeroDoPedido">
-        </mat-form-field>
-      </div>
-      
-      <div class="col-md-6">
-        <label>Cliente</label><br>
-        <mat-form-field>
-          <input disabled matInput [(ngModel)]="entityService.orderSelected.nomeDoCliente">
-        </mat-form-field>
-      </div>
+<div class="container-fluid" id="tabels">
+  <div class="row">
+    <div class="col-md-6">
+      <label>{{emailClient}}</label>
     </div>
-    <div class="row" *ngIf="itemSelectes">
-      
-      <div class="col-md-12">
-        <mat-form-field>
-          <input disabled matInput [(ngModel)]="item.descItem">
-        </mat-form-field>
-      </div>
+    <div class="col-md-6">
+      <label>{{hourOrder}}</label>
     </div>
-    <div class="row"  *ngIf="itemSelectes">
-      <div class="col-md-12">
-        <mat-form-field>
-          <textarea matInput disabled [(ngModel)]="item.obs"></textarea>
-        </mat-form-field>
-      </div>
-      <div class="col-md-2">
-          <button mat-button (click)="finalize()">Finalizar</button>
-      </div>
+  </div>
+  <div class="row" *ngIf="itemSelectes">
+
+    <div class="col-md-12">
+      <label>{{item.descItem}}</label>
     </div>
-    <br>
-     <app-order-itens-list (itemOrderSelected)="itemSelected($event)"></app-order-itens-list>
+  </div>
+  <div class="row" *ngIf="itemSelectes">
+    <div class="col-md-12">
+      <mat-form-field style="width: 600px;">
+        <textarea matInput disabled [(ngModel)]="item.obs"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2">
+      <button mat-button (click)="finalize()">Finalizar</button>
+    </div>
+  </div>
+  <br>
+  <app-order-itens-list (itemOrderSelected)="itemSelected($event)"></app-order-itens-list>
 </div>

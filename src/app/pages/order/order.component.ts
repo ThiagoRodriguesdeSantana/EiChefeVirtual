@@ -51,7 +51,7 @@ export class OrderComponent implements OnInit {
   orderSelected(event){
     if(event){
       this.selectedOrder = true;
-      this.entityService.getOrderByNumber(event);
+      this.entityService.getOrderByEmail(event);
       console.log(this.entityService.orderSelected);
     }
   }

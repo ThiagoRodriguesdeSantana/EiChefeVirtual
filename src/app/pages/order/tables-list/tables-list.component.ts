@@ -24,7 +24,7 @@ export class TablesListComponent implements OnInit {
    }
 
   ngOnInit() {
-
+    let t = this.entityService.entitySelected.mesas;
   }
 
   isAllSelected() {

@@ -46,7 +46,7 @@ export class OrderListComponent implements OnInit {
 
   getSelectedRow(row){
     this.orderSelected = row.numeroDoPedido;
-    this.order.emit(row.numeroDoPedido)
+    this.order.emit(row.emailDoCliente)
   }
 
 }

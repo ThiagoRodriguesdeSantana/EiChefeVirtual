@@ -7,10 +7,13 @@
   
   .mat-table {
     overflow: auto;
-    max-height: 500px;
+    max-height: 450px;
   }
   
   .mat-column-select {
     overflow: visible;
+  }
+  #tabels{
+    margin-top: 20px;
   }
   

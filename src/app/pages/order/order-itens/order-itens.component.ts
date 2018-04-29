@@ -12,9 +12,16 @@ export class OrderItensComponent implements OnInit {
 
   item: ItemToForm;
   itemSelectes:boolean = false;
-  constructor(private entityService: EntityService) { }
+  emailClient:string;
+  hourOrder:Date;
+
+  constructor(private entityService: EntityService) { 
+    this.emailClient = this.entityService.orderSelected.emailDoCliente;
+    this.hourOrder = this.entityService.orderSelected.horaDoPedido;
+  }
 
   ngOnInit() {
+    
   }
 
   itemSelected(event) {
