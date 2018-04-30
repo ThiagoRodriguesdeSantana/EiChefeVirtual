@@ -1,14 +1,11 @@
-
+<div class="container-fluid">
     <div class="row col-md-5">
         <label>Buscar pela descrição</label>
-        <input 
-            class="form-control" 
-            name="search" 
-            [(ngModel)]="search"
-            (keyup)="getItemByDesctiption($event)" 
-            placeholder="Busca" required>
+        <input class="form-control" name="search" [(ngModel)]="search" (keyup)="getItemByDesctiption($event)" placeholder="Busca"
+            required>
     </div>
-    <br><br>
+    <br>
+    <br>
     <table class="table table-sm table-hover">
         <thead>
             <tr>
@@ -42,3 +39,4 @@
             </tr>
         </tbody>
     </table>
+</div>

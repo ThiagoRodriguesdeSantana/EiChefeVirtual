@@ -206,7 +206,6 @@ export class EntityService {
         }
     }
 
-
     generatTables(entity: Entity) {
         entity.mesas = new Array<Tables>();
         for (let index = 1; index <= entity.quantidadeDeMesas; index++) {

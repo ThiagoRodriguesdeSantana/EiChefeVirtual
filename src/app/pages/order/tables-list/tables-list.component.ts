@@ -20,11 +20,9 @@ export class TablesListComponent implements OnInit {
   tableSelected:string;
 
   constructor(private entityService: EntityService) {
-    
    }
-
+   
   ngOnInit() {
-    let t = this.entityService.entitySelected.mesas;
   }
 
   isAllSelected() {

@@ -13,7 +13,7 @@ export class OrderListComponent implements OnInit {
 
   @Output() order = new EventEmitter<string>();
   orderSelected: string;
-  displayedColumns = ['pedidoEmAberto', 'numeroDoPedido'];
+  displayedColumns = ['pedidoEmAberto', 'emailDoCliente'];
   dataSource = new MatTableDataSource<Order>(new Array<Order>());
   selection = new SelectionModel<Order>(true, []);
 
@@ -45,6 +45,8 @@ export class OrderListComponent implements OnInit {
   }
 
   getSelectedRow(row){
+
+    console.log(row)
     this.orderSelected = row.numeroDoPedido;
     this.order.emit(row.emailDoCliente)
   }
