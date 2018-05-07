@@ -5,6 +5,7 @@ export class Item {
     $key:string;
     codigo:string;
     preco:number;
+    nome:string;
     descricao:string;
     status:boolean;
     imagem:string;

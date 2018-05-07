@@ -36,7 +36,6 @@ export class OrderComponent implements OnInit {
         this.entityService.entitySelected = ent;
       });
     }
-
   }
 
   tableSelected(event){

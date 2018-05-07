@@ -18,7 +18,15 @@
 
         <div class="row col-md-12">
           <label>Nome do item</label>
-          <input class="form-control" name="descricao" [(ngModel)]="entityService.itemSelected.descricao" placeholder="Descrição" required>
+          <input class="form-control" name="nome" [(ngModel)]="entityService.itemSelected.nome" placeholder="Nome" required>
+          <div *ngIf="noInfNameItem" class="alert alert-danger">
+            <span>{{errorNameNotInf}}</span>
+          </div>
+        </div>
+
+        <div class="row col-md-12">
+          <label>Descrição do item</label>
+          <textarea class="form-control" name="descricao" [(ngModel)]="entityService.itemSelected.descricao" placeholder="Descrição" required></textarea>
           <div *ngIf="noInfDescItem" class="alert alert-danger">
             <span>{{errorDescriptionNotInf}}</span>
           </div>

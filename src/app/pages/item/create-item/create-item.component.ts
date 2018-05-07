@@ -15,9 +15,11 @@ export class CreateItemComponent implements OnInit {
 
 
   errorCodItemNotInf: string = "O código do item deve ser informado.";
+  errorNameNotInf: string = "O nome do item deve ser infromado.";
   errorDescriptionNotInf: string = "A descrição do item deve ser infromada.";
   tipos: string[];
   notInfCodeItem: boolean;
+  noInfNameItem: boolean;
   noInfDescItem: boolean;
   selected:string
   constructor(private entityService: EntityService,
@@ -63,6 +65,13 @@ export class CreateItemComponent implements OnInit {
     this.noInfDescItem = !this.entityService.itemSelected.descricao;
     if (this.noInfDescItem) {
       throw new Error(this.errorDescriptionNotInf);
+    }
+  }
+
+  validNotInfName() {
+    this.noInfDescItem = !this.entityService.itemSelected.nome;
+    if (this.noInfNameItem) {
+      throw new Error(this.errorNameNotInf);
     }
   }
   setValidationsFalse(event) {

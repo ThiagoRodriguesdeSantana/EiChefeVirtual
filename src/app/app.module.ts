@@ -79,4 +79,5 @@ import { OrderItensListComponent } from './pages/order/order-itens/order-itens-l
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

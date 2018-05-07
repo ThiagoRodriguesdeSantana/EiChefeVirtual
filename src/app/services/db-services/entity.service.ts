@@ -13,6 +13,10 @@ import { ItemOrder } from '../../models/itemOrder';
 @Injectable()
 export class EntityService {
 
+
+
+    CLIENTES: any;
+    clientesList: AngularFireList<any>;
     orderSelected: Order;
     tableSelected: Tables;
     itemSelected: Item;
@@ -23,9 +27,10 @@ export class EntityService {
     entitySelected: Entity;
     entities: AngularFireList<any>;
 
-    constructor(private firebaseDb: AngularFireDatabase, 
+    constructor(private firebaseDb: AngularFireDatabase,
         private common: CommonService) {
         this.entitySelected = new Entity();
+        this.clientesList = this.firebaseDb.list(this.CLIENTES);
         this.validate = EntityValidate.getInstance();
         this.reloadEntity();
     }
@@ -98,7 +103,7 @@ export class EntityService {
     }
 
     saveEntity(entity: Entity) {
-        this.generatTables(entity);
+        //this.generatTables(entity);
         if (entity.logo == '' || entity.logo == null) {
             entity.logo = 'gs://comandavirtual-15db8.appspot.com/undefined/help-web-button.png'
         }
@@ -126,8 +131,7 @@ export class EntityService {
             telefones: entity.telefones,
             login: entity.login,
             logo: entity.logo,
-            quantidadeDeMesas: entity.quantidadeDeMesas,
-            mesas: entity.mesas
+            quantidadeDeMesas: entity.quantidadeDeMesas
         });
     }
 
@@ -146,10 +150,19 @@ export class EntityService {
             telefones: entity.telefones,
             logo: entity.logo,
             itens: entity.itens != null ? entity.itens : new Array<Item>(),
-            quantidadeDeMesas: entity.quantidadeDeMesas,
-            mesas: entity.mesas
+            quantidadeDeMesas: entity.quantidadeDeMesas
+        });
+
+        this.saveUser(entity.login.email);
+
+    }
+
+    saveUser(email: string) {
+        this.clientesList.push({
+            usuario: email
         });
     }
+
     deletEntityById($key: string) {
         this.entities.remove($key);
     }

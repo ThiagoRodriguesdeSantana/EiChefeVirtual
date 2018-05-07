@@ -9,8 +9,6 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class CommonService {
 
-
-   
     basePath = 'imagens';
     urlImage: string;
     private email = new BehaviorSubject<string>('');
