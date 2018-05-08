@@ -15,10 +15,9 @@ export class EntityService {
 
 
 
-    CLIENTES: any;
+    CLIENTES = 'clientes';
     clientesList: AngularFireList<any>;
     orderSelected: Order;
-    tableSelected: Tables;
     itemSelected: Item;
     private entity = new BehaviorSubject<Entity>(new Entity());
     entityLoeaded$ = this.entity.asObservable();
@@ -66,6 +65,7 @@ export class EntityService {
                     item.$key = snapshot.key;
                     list.push(item as Entity)
                     this.entitySelected = list[0];
+                    this.entitySelected.pedidos = Object.values(this.entitySelected.pedidos);
                     this.entity.next(this.entitySelected);
                 });
         });
@@ -220,27 +220,25 @@ export class EntityService {
     }
 
     generatTables(entity: Entity) {
-        entity.mesas = new Array<Tables>();
-        for (let index = 1; index <= entity.quantidadeDeMesas; index++) {
-            let newTable = new Tables();
-            newTable.numero = "" + index;
-            entity.mesas.push(newTable);
-        }
+        // entity.mesas = new Array<Tables>();
+        // for (let index = 1; index <= entity.quantidadeDeMesas; index++) {
+        //     let newTable = new Tables();
+        //     newTable.numero = "" + index;
+        //     entity.mesas.push(newTable);
+        // }
     }
 
     getTableByNumber(numero: string) {
-        if (this.entitySelected.mesas) {
-            this.tableSelected = this.entitySelected.mesas
-                .find(c => c.numero == numero);
-        }
+      
+        
     }
 
 
     getOrderByEmail(email: string) {
-        if (this.tableSelected.pedidos) {
-            this.orderSelected = this.tableSelected.pedidos
-                .find(c => c.emailDoCliente == email);
-        }
+        // if (this.tableSelected.pedidos) {
+        //     this.orderSelected = this.tableSelected.pedidos
+        //         .find(c => c.emailDoCliente == email);
+        // }
     }
 
 }

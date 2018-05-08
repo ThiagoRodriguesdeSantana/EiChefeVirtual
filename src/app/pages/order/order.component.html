@@ -1,20 +1,22 @@
 <!-- <label>Mesa: {{table.numero}}</label> -->
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-            <app-tables-list (table)="tableSelected($event)"></app-tables-list>
-        </div>
-
-        <div class="col-md-3">
-            <div *ngIf="selectedTable">
-                <app-order-list (order)="orderSelected($event)"></app-order-list>
+        <div class="col-md-8">
+            <div class="container-fluid" id="tabels">
+                <h1>Pedidos em aberto</h1>
+                <app-tables-list (table)="tableSelected($event)"></app-tables-list>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <div *ngIf="selectedOrder">
-                <app-order-itens></app-order-itens>
+            <div class="col-md-2">
+                <div *ngIf="selectedTable">
+                    <app-order-list (order)="orderSelected($event)"></app-order-list>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div *ngIf="selectedOrder">
+                    <app-order-itens></app-order-itens>
+                </div>
             </div>
         </div>
     </div>
-</div>

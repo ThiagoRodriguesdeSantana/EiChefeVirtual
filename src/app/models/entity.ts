@@ -26,7 +26,7 @@ export class Entity {
     logo: string;
     itens:Item[];
     quantidadeDeMesas:number;
-    mesas:Tables[];
+    pedidos:Order[];
 
     copyTo(entity: Entity) {
         

@@ -46,6 +46,8 @@ export class TablesListComponent implements OnInit {
   }
 
   getSelectedRow(row){
+    console.log(row);
+    
     this.tableSelected = row.numero;
     this.table.emit(row.numero)
   }

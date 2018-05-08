@@ -40,10 +40,10 @@ export class OrderComponent implements OnInit {
 
   tableSelected(event){
     if(event){
-      this.selectedTable = true;
-      this.entityService.getTableByNumber(event);
-      this.table = this.entityService.tableSelected;
-      console.log(event);
+       this.selectedTable = true;
+       this.entityService.getTableByNumber(event);
+       //this.table = this.entityService.tableSelected;
+       console.log(event);
     }
   }
 

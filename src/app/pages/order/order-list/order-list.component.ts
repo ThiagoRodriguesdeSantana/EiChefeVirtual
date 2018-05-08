@@ -20,7 +20,7 @@ export class OrderListComponent implements OnInit {
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-    this.entityService.tableSelected.pedidos;
+    //this.entityService.tableSelected.pedidos;
   }
 
 
