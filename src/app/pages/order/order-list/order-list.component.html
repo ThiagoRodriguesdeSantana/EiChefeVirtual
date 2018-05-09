@@ -1,29 +1,13 @@
 <div class="container-fluid" id="tabels">
-  <div class="mat-elevation-z8" id="tabels">
-    <mat-table #table [dataSource]="entityService.tableSelected.pedidos">
-
-      <!-- Checkbox Column -->
-      <ng-container matColumnDef="pedidoEmAberto">
-        <mat-header-cell *matHeaderCellDef>
-          <label>Pedido em aberto</label>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="getValue(row)" (change)="$event ? selection.toggle(row) : null" [checked]="isSelected(row)">
-          </mat-checkbox>
-        </mat-cell>
-      </ng-container>
-
-      <!-- Position Column -->
-      <ng-container matColumnDef="emailDoCliente">
-        <mat-header-cell *matHeaderCellDef>
-          <label> E-mail do cliente </label>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.emailDoCliente}} </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSelectedRow(row)">
-      </mat-row>
-    </mat-table>
+  <div class="container-fluid" id="tabels">
+    <ul class="list-inline">
+      <li class="list-inline-item" *ngFor="let item of entityService.entitySelected.pedidos; let i = index">
+        <div class="card">
+          <div class="card-body" (click)="getSelectedRow(item)">
+            <h4 class="card-title">Mesa: 0{{item.mesa}}</h4>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </div>

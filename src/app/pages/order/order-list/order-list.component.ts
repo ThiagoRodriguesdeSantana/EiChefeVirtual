@@ -11,7 +11,7 @@ import { EntityService } from '../../../services/db-services/entity.service';
 })
 export class OrderListComponent implements OnInit {
 
-  @Output() order = new EventEmitter<string>();
+  @Output() order = new EventEmitter<Order>();
   orderSelected: string;
   displayedColumns = ['pedidoEmAberto', 'emailDoCliente'];
   dataSource = new MatTableDataSource<Order>(new Array<Order>());
@@ -47,8 +47,7 @@ export class OrderListComponent implements OnInit {
   getSelectedRow(row){
 
     console.log(row)
-    this.orderSelected = row.numeroDoPedido;
-    this.order.emit(row.emailDoCliente)
+    this.order.emit(row)
   }
 
 }

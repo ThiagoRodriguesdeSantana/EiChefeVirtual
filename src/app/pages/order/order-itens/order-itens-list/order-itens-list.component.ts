@@ -1,9 +1,10 @@
+import { Order } from './../../../../models/order';
 import { Item } from './../../../../models/item';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { ItemToForm } from '../../modelOrderItem/item-to-form';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { EntityService } from '../../../../services/db-services/entity.service';
+import { ItemToForm } from '../../../../models/item-to-form';
 
 @Component({
   selector: 'app-order-itens-list',
@@ -14,7 +15,7 @@ export class OrderItensListComponent implements OnInit {
 
 
   @Output() itemOrderSelected = new EventEmitter<ItemToForm>();
-  @Input() hero: Item;
+  @Input() itensList: Order[];
 
   displayedColumns = ['finalized', 'codItem', 'descItem', 'qtdItem', 'priceItem', 'obs'];
   dataSource = new MatTableDataSource<ItemToForm>(new Array<ItemToForm>());
@@ -25,21 +26,24 @@ export class OrderItensListComponent implements OnInit {
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-    this.fillForm();
+
+    console.log('tewstesters'+this.itensList);
+    
   }
 
-  fillForm() {
-    this.entityService.orderSelected.itens.forEach((item) => {
-      let itemToform = new ItemToForm();
-      itemToform.codItem = item.item.codigo;
-      itemToform.descItem = item.item.descricao;
-      itemToform.finalized = false;
-      itemToform.obs = item.observacao;
-      itemToform.priceItem = item.item.preco;
-      itemToform.qtdItem = item.quantidade;
-      this.itensToForm.push(itemToform);
-    })
-  }
+
+  // fillForm() {
+  //   this.entityService.orderSelected.itens.forEach((orderSelected) => {
+  //     let itemToform = new ItemToForm();
+  //     itemToform.codItem = orderSelected.item.codigo;
+  //     itemToform.descItem = orderSelected.item.descricao;
+  //     itemToform.finalized = false;
+  //     itemToform.obs = orderSelected.observacao;
+  //     itemToform.priceItem = orderSelected.item.preco;
+  //     itemToform.qtdItem = orderSelected.quantidade;
+  //     this.itensToForm.push(itemToform);
+  //   })
+  // }
 
   isSelected(row) {
     return row.pedidoEmAberto;

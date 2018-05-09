@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Order } from './../../../models/order';
+import { Component, OnInit, Input } from '@angular/core';
 import { EntityService } from '../../../services/db-services/entity.service';
-import { ItemToForm } from '../modelOrderItem/item-to-form';
 import {MatInputModule} from '@angular/material/input';
+import { ItemToForm } from '../../../models/item-to-form';
 
 @Component({
   selector: 'app-order-itens',
@@ -14,6 +15,7 @@ export class OrderItensComponent implements OnInit {
   itemSelectes:boolean = false;
   emailClient:string;
   hourOrder:Date;
+  @Input() order:Order;
 
   constructor(private entityService: EntityService) { 
     this.emailClient = this.entityService.orderSelected.emailDoCliente;

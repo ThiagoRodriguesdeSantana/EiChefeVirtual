@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { EntityService } from '../../services/db-services/entity.service';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ItemToForm } from '../../models/item-to-form';
 
 
 @Component({
@@ -14,9 +15,12 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class OrderComponent implements OnInit {
 
   
+
+  order: ItemToForm[];
   selectedOrder: boolean;
   selectedTable: boolean;
   table: Tables;
+  teste = 'teste de teste'
   
   constructor(private entityService: EntityService) {
 
@@ -40,8 +44,9 @@ export class OrderComponent implements OnInit {
 
   tableSelected(event){
     if(event){
-       this.selectedTable = true;
-       this.entityService.getTableByNumber(event);
+      
+      this.selectedOrder = true;
+      this.entityService.getTableByNumber(event);
        //this.table = this.entityService.tableSelected;
        console.log(event);
     }
@@ -50,9 +55,25 @@ export class OrderComponent implements OnInit {
   orderSelected(event){
     if(event){
       this.selectedOrder = true;
-      this.entityService.getOrderByEmail(event);
+      this.entityService.orderSelected = event;
+      this.getItemToForm();
       console.log(this.entityService.orderSelected);
     }
+  }
+
+  getItemToForm(){
+
+    this.order = [];
+    this.entityService.orderSelected.itens.forEach((orderSelected) => {
+      let itemToform = new ItemToForm();
+      itemToform.codItem = orderSelected.item.codigo;
+      itemToform.descItem = orderSelected.item.descricao;
+      itemToform.finalized = false;
+      itemToform.obs = orderSelected.observacao;
+      itemToform.priceItem = orderSelected.item.preco;
+      itemToform.qtdItem = orderSelected.quantidade;
+      this.order.push(itemToform);
+    })
   }
 }
 

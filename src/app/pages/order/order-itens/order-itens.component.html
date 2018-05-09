@@ -24,5 +24,7 @@
     </div>
   </div>
   <br>
-  <app-order-itens-list (itemOrderSelected)="itemSelected($event)"></app-order-itens-list>
+  <app-order-itens-list [itensList]="order" (itemOrderSelected)="itemSelected($event)"></app-order-itens-list>
+
+  
 </div>
