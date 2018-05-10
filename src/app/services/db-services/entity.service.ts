@@ -1,3 +1,4 @@
+import { ItemToForm } from './../../models/item-to-form';
 import { Tables } from './../../models/Tables';
 import { element } from 'protractor';
 import { Entity } from './../../models/entity';
@@ -12,7 +13,6 @@ import { Order } from '../../models/order';
 import { ItemOrder } from '../../models/itemOrder';
 @Injectable()
 export class EntityService {
-
 
 
     CLIENTES = 'clientes';
@@ -114,6 +114,17 @@ export class EntityService {
         }
     }
 
+    finalizeItem(item:ItemToForm) {
+        
+        for (let i = 0; i < this.orderSelected.itens.length; i++) {
+            if(this.orderSelected.itens[i].item.codigo == item.codItem){
+                this.orderSelected.itens[i].antendido = item.finalized;
+            }
+        }
+    let path =  'empresas/' + this.entitySelected.$key + '/pedidos/' + this.orderSelected.numeroDoPedido;
+    this.firebaseDb.object(path).set({ ...this.orderSelected });
+
+    }
     insertEntity(entity: Entity) {
 
         this.common.addNewUser(entity.login);
@@ -229,8 +240,8 @@ export class EntityService {
     }
 
     getTableByNumber(numero: string) {
-      
-        
+
+
     }
 
 

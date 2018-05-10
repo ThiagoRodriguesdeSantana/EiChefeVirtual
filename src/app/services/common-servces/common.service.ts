@@ -39,7 +39,6 @@ export class CommonService {
         firebase.auth().onAuthStateChanged(user => {
             var url = this.route.routerState.snapshot.url;
             if (user) {
-                console.log(user)
                 this.email.next(user.email);
                 if (url == '/') {
                     this.redirectToHomePage();

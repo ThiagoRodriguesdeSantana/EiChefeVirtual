@@ -1,4 +1,5 @@
 export class ItemToForm {
+    chaveDoPedido:string
     finalized: boolean;
     codItem:string;
     descItem:string;

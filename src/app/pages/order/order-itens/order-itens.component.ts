@@ -1,6 +1,6 @@
+import { EntityService } from './../../../services/db-services/entity.service';
 import { Order } from './../../../models/order';
 import { Component, OnInit, Input } from '@angular/core';
-import { EntityService } from '../../../services/db-services/entity.service';
 import {MatInputModule} from '@angular/material/input';
 import { ItemToForm } from '../../../models/item-to-form';
 
@@ -23,7 +23,6 @@ export class OrderItensComponent implements OnInit {
   }
 
   ngOnInit() {
-    
   }
 
   itemSelected(event) {

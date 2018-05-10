@@ -26,24 +26,7 @@ export class OrderItensListComponent implements OnInit {
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-
-    console.log('tewstesters'+this.itensList);
-    
   }
-
-
-  // fillForm() {
-  //   this.entityService.orderSelected.itens.forEach((orderSelected) => {
-  //     let itemToform = new ItemToForm();
-  //     itemToform.codItem = orderSelected.item.codigo;
-  //     itemToform.descItem = orderSelected.item.descricao;
-  //     itemToform.finalized = false;
-  //     itemToform.obs = orderSelected.observacao;
-  //     itemToform.priceItem = orderSelected.item.preco;
-  //     itemToform.qtdItem = orderSelected.quantidade;
-  //     this.itensToForm.push(itemToform);
-  //   })
-  // }
 
   isSelected(row) {
     return row.pedidoEmAberto;
@@ -60,11 +43,11 @@ export class OrderItensListComponent implements OnInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
-    alert('isAllSelected()');
     return numSelected === numRows;
   }
 
   getSelectedRow(row) {
+    this.entityService.finalizeItem(row)
     this.itemOrderSelected.emit(row);
   }
 

@@ -1,45 +1,47 @@
 <div class="mat-elevation-z8 addScroll">
-    <mat-table #table [dataSource]="itensList">
+  <mat-table #table [dataSource]="itensList">
 
-      <!-- Checkbox Column -->
-      <ng-container matColumnDef="finalized">
-        <mat-header-cell *matHeaderCellDef>
-          <label>Finalizado</label>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="getValue(row)" (change)="$event ? selection.toggle(row) : null" [checked]="isSelected(row)">
-          </mat-checkbox>
-        </mat-cell>
-      </ng-container>
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="finalized">
+      <mat-header-cell *matHeaderCellDef>
+        <label>Separado</label>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox 
+             (change)="$event ? selection.toggle(row.finalized) : null"
+             [checked]="isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="codItem">
-        <mat-header-cell *matHeaderCellDef> Codigo item </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.codItem}} </mat-cell>
-      </ng-container>
+    <!-- Position Column -->
+    <ng-container matColumnDef="codItem">
+      <mat-header-cell *matHeaderCellDef> Codigo item </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.codItem}} </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="descItem">
-        <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.descItem}} </mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="descItem">
+      <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.descItem}} </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="qtdItem">
-        <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.qtdItem}} </mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="qtdItem">
+      <mat-header-cell *matHeaderCellDef> Quantidade </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="text-center"> {{element.qtdItem}} </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="priceItem">
-        <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.priceItem}} </mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="priceItem">
+      <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.priceItem}} </mat-cell>
+    </ng-container>
 
-      <ng-container matColumnDef="obs">
-        <mat-header-cell *matHeaderCellDef> Observações </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.obs}} </mat-cell>
-      </ng-container>
+    <ng-container matColumnDef="obs">
+      <mat-header-cell *matHeaderCellDef> Observações </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.obs}} </mat-cell>
+    </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSelectedRow(row)">
-      </mat-row>
-    </mat-table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSelectedRow(row)">
+    </mat-row>
+  </mat-table>
 </div>

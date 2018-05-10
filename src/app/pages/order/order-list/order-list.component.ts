@@ -20,7 +20,6 @@ export class OrderListComponent implements OnInit {
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-    //this.entityService.tableSelected.pedidos;
   }
 
 
@@ -40,13 +39,10 @@ export class OrderListComponent implements OnInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
-    alert('isAllSelected()');
     return numSelected === numRows;
   }
 
   getSelectedRow(row){
-
-    console.log(row)
     this.order.emit(row)
   }
 

@@ -5,6 +5,7 @@ import { EntityService } from '../../services/db-services/entity.service';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ItemToForm } from '../../models/item-to-form';
+import { ItemOrder } from '../../models/itemOrder';
 
 
 @Component({
@@ -57,18 +58,18 @@ export class OrderComponent implements OnInit {
       this.selectedOrder = true;
       this.entityService.orderSelected = event;
       this.getItemToForm();
-      console.log(this.entityService.orderSelected);
     }
   }
 
   getItemToForm(){
 
     this.order = [];
-    this.entityService.orderSelected.itens.forEach((orderSelected) => {
+    this.entityService.orderSelected.itens.forEach((orderSelected:ItemOrder) => {
       let itemToform = new ItemToForm();
+      itemToform.chaveDoPedido = this.entityService.orderSelected.numeroDoPedido;
       itemToform.codItem = orderSelected.item.codigo;
       itemToform.descItem = orderSelected.item.descricao;
-      itemToform.finalized = false;
+      itemToform.finalized = orderSelected.antendido;
       itemToform.obs = orderSelected.observacao;
       itemToform.priceItem = orderSelected.item.preco;
       itemToform.qtdItem = orderSelected.quantidade;
