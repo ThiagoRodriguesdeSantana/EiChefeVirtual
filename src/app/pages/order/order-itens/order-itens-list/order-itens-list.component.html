@@ -1,5 +1,5 @@
-<div class="mat-elevation-z8 addScroll">
-  <mat-table #table [dataSource]="itensList">
+<div class="mat-elevation-z8">
+  <mat-table #table [dataSource]="itensList" class="addScroll">
 
     <!-- Checkbox Column -->
     <ng-container matColumnDef="finalized">
@@ -8,8 +8,8 @@
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
         <mat-checkbox 
-             (change)="$event ? selection.toggle(row.finalized) : null"
-             [checked]="isSelected(row)">
+        [(ngModel)]="row.finalized"
+        (click)="selectBox(row)" >
         </mat-checkbox>
       </mat-cell>
     </ng-container>

@@ -14,6 +14,7 @@ import { ItemToForm } from '../../../../models/item-to-form';
 export class OrderItensListComponent implements OnInit {
 
 
+
   @Output() itemOrderSelected = new EventEmitter<ItemToForm>();
   @Input() itensList: Order[];
 
@@ -28,9 +29,24 @@ export class OrderItensListComponent implements OnInit {
   ngOnInit() {
   }
 
-  isSelected(row) {
-    return row.pedidoEmAberto;
+  selectBox(row) {
+    this.entityService.finalizeItem(this.getNewRowChecked(row))
   }
+  
+  getNewRowChecked(item: ItemToForm): ItemToForm {
+    var newItem = new ItemToForm()
+
+    newItem.chaveDoPedido = item.chaveDoPedido;
+    newItem.codItem = item.codItem;
+    newItem.descItem = item.descItem;
+    newItem.finalized = !item.finalized;
+    newItem.obs = item.obs;
+    newItem.priceItem = item.priceItem;
+    newItem.qtdItem = item.qtdItem;
+    
+    return newItem;
+  }
+
   getValue(event) {
     console.log(event);
   }
@@ -47,7 +63,6 @@ export class OrderItensListComponent implements OnInit {
   }
 
   getSelectedRow(row) {
-    this.entityService.finalizeItem(row)
     this.itemOrderSelected.emit(row);
   }
 

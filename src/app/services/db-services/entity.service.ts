@@ -15,6 +15,7 @@ import { ItemOrder } from '../../models/itemOrder';
 export class EntityService {
 
 
+
     CLIENTES = 'clientes';
     clientesList: AngularFireList<any>;
     orderSelected: Order;
@@ -65,7 +66,8 @@ export class EntityService {
                     item.$key = snapshot.key;
                     list.push(item as Entity)
                     this.entitySelected = list[0];
-                    this.entitySelected.pedidos = Object.values(this.entitySelected.pedidos);
+                    let pedidos = Object.values(this.entitySelected.pedidos);
+                    this.entitySelected.pedidos = pedidos.filter(c=> c.pedidoEmAberto);
                     this.entity.next(this.entitySelected);
                 });
         });
@@ -85,8 +87,6 @@ export class EntityService {
             })
         })
     }
-
-
 
     consultarPorCnpj(): any {
         let list = Array<Entity>();
@@ -114,17 +114,21 @@ export class EntityService {
         }
     }
 
-    finalizeItem(item:ItemToForm) {
-        
+    finalizeItem(item: ItemToForm) {
+
         for (let i = 0; i < this.orderSelected.itens.length; i++) {
-            if(this.orderSelected.itens[i].item.codigo == item.codItem){
+            if (this.orderSelected.itens[i].item.codigo == item.codItem) {
                 this.orderSelected.itens[i].antendido = item.finalized;
             }
         }
-    let path =  'empresas/' + this.entitySelected.$key + '/pedidos/' + this.orderSelected.numeroDoPedido;
-    this.firebaseDb.object(path).set({ ...this.orderSelected });
+        this.alterOrderSelected();
 
     }
+    private alterOrderSelected() {
+        let path = 'empresas/' + this.entitySelected.$key + '/pedidos/' + this.orderSelected.numeroDoPedido;
+        this.firebaseDb.object(path).set({ ...this.orderSelected });
+    }
+
     insertEntity(entity: Entity) {
 
         this.common.addNewUser(entity.login);
@@ -228,6 +232,18 @@ export class EntityService {
             return this.entitySelected.itens
                 .find(c => c.codigo == codigo);
         }
+    }
+
+    finalizeOrder() {
+
+        this.orderSelected.itens.forEach(item => {
+            if (!item.antendido) {
+                throw new Error("Ainda existem itens que não foram atendidos,"
+                    + "você precisa atendelos antes de finalizar o pedido.");
+            }
+        });
+        this.orderSelected.pedidoEmAberto = false;
+        this.alterOrderSelected();
     }
 
     generatTables(entity: Entity) {
