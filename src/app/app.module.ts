@@ -38,7 +38,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { OrderComponent } from './pages/order/order.component';
 import { OrderListComponent } from './pages/order/order-list/order-list.component';
 import { OrderItensComponent } from './pages/order/order-itens/order-itens.component';
+import { AdditionalValuesComponent } from './pages/additional-values/additional-values.component';
 import { OrderItensListComponent } from './pages/order/order-itens/order-itens-list/order-itens-list.component';
+import { ListAdditionalValuesComponent } from './pages/additional-values/list-additional-values/list-additional-values.component';
+import { SolicitacoesDePagamentoComponent } from './pages/solicitacoes-de-pagamento/solicitacoes-de-pagamento.component';
+import { PagamentosListComponent } from './pages/solicitacoes-de-pagamento/pagamentos-list/pagamentos-list.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +59,11 @@ import { OrderItensListComponent } from './pages/order/order-itens/order-itens-l
     OrderComponent,
     OrderListComponent,
     OrderItensComponent,
-    OrderItensListComponent
+    OrderItensListComponent,
+    AdditionalValuesComponent,
+    ListAdditionalValuesComponent,
+    SolicitacoesDePagamentoComponent,
+    PagamentosListComponent
   ],
   imports: [
     BrowserModule,

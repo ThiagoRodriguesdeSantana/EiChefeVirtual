@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <br>
+  <br>
+  <br>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <form #item="ngForm" (ngSubmit)="saveAdditionaValue(item)">
+          <div class="row">
+            <div class="row col-md-8">
+              <label>Descrição do valor adicional</label>
+              <input class="form-control" name="descricao" [(ngModel)]="additionalValues.descricao" placeholder="Ex. Couvert, gorjeta, servicos ..."
+                required>
+            </div>
+          </div>
+
+          <br>
+          <br>
+
+          <div class="row">
+            <div class="row col-md-3">
+              <label>Valor a ser incluído no fechamento</label>
+              <input class="form-control" name="valor" id="value" [(ngModel)]="additionalValues.valor" placeholder=" {{tipo}}" required>
+            </div>
+
+
+            <div class="form-check col-md-3">
+              <div class="chkPercentual">
+                <input type="checkbox" class="form-check-input" [checked]="additionalValues.percentual" (change)="additionalValues.percentual = !additionalValues.percentual"
+                  (click)="alterType()">
+                <label class="form-check-label" for="chkStatus" id="chkStatusDec">Percentual</label>
+              </div>
+
+            </div>
+
+
+            <div class="form-check col-md-3">
+              <div class="chkStatus">
+                <input type="checkbox" class="form-check-input" id="chkStatus" [checked]="additionalValues.ativo" (change)="additionalValues.ativo = !additionalValues.ativo">
+                <label class="form-check-label" for="chkStatus" id="chkStatusDec">Ativo</label>
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <br>
+          <div class="row">
+            <div class="btn-group" role="group">
+              <button class="btn btn-default" style="width: 100px; background-color:lightseagreen" type="submit">
+                Salvar </button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-secondary" (click)="clear()">Limpar Campos</button>
+              </div>
+          </div>
+         
+
+        </form>
+      </div>
+
+      <div class="col-md-4">
+        <app-list-additional-values (additionalSelected)="selectedVauel($event)"></app-list-additional-values>
+      </div>
+    </div>
+  </div>
+</div>

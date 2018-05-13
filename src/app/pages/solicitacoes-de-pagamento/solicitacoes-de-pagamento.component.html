@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <br>
+  <br>
+  <br>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-md-4">
+        <app-pagamentos-list (closesSelected)="selected($event)"></app-pagamentos-list>
+      </div>
+
+      <div class="col-md-8" *ngIf="closingSelected != null">
+        <div class="row">
+          <div class="row col-md-8">
+            <label>Mesa: 0{{closingSelected.mesa}}</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="row col-md-3">
+            <label>Valor total: {{closingSelected.valorTotal}}</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-check col-md-3">
+            <div class="chkPercentual">
+              <input type="checkbox" class="form-check-input" [checked]="closingSelected.estaPago" (change)="closingSelected.estaPago = !closingSelected.estaPago"
+                (click)="pay()">
+              <label class="form-check-label" for="chkStatus" id="chkStatusDec">Marcar como pago</label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,8 +13,6 @@ import { ItemToForm } from '../../../../models/item-to-form';
 })
 export class OrderItensListComponent implements OnInit {
 
-
-
   @Output() itemOrderSelected = new EventEmitter<ItemToForm>();
   @Input() itensList: Order[];
 

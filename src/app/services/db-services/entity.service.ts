@@ -1,3 +1,5 @@
+import { ClosingRequestToForm } from './../../models/closing-request-to-form';
+import { AdditionalValues } from './../../models/additional-values';
 import { ItemToForm } from './../../models/item-to-form';
 import { Tables } from './../../models/Tables';
 import { element } from 'protractor';
@@ -11,8 +13,12 @@ import { Item } from '../../models/item';
 import { EntityValidate } from '../validates/entity-validate';
 import { Order } from '../../models/order';
 import { ItemOrder } from '../../models/itemOrder';
+import { v1 } from 'uuid';
+
 @Injectable()
 export class EntityService {
+
+
 
 
 
@@ -23,6 +29,8 @@ export class EntityService {
     private entity = new BehaviorSubject<Entity>(new Entity());
     entityLoeaded$ = this.entity.asObservable();
     validate: EntityValidate;
+    requestClosesList: ClosingRequestToForm[];
+
 
     entitySelected: Entity;
     entities: AngularFireList<any>;
@@ -32,6 +40,7 @@ export class EntityService {
         this.entitySelected = new Entity();
         this.clientesList = this.firebaseDb.list(this.CLIENTES);
         this.validate = EntityValidate.getInstance();
+        this.requestClosesList = new Array<ClosingRequestToForm>();
         this.reloadEntity();
     }
     getAllEntities() {
@@ -67,8 +76,10 @@ export class EntityService {
                     list.push(item as Entity)
                     this.entitySelected = list[0];
                     let pedidos = Object.values(this.entitySelected.pedidos);
-                    this.entitySelected.pedidos = pedidos.filter(c=> c.pedidoEmAberto);
+                    this.getClosingRequest(pedidos)
+                    this.entitySelected.pedidos = pedidos.filter(c => c.pedidoEmAberto);
                     this.entity.next(this.entitySelected);
+
                 });
         });
     }
@@ -88,6 +99,31 @@ export class EntityService {
         })
     }
 
+
+    getClosingRequest(orders: Order[]) {
+        let request = orders.filter(c=> !c.solicitacaoDeFechamento.pago)
+        if (request) {
+
+            
+            request.forEach(c => {
+                if (c.solicitacaoDeFechamento) {
+
+                    let close = new ClosingRequestToForm();
+                    close.numeroDoPedido = c.numeroDoPedido;
+                    close.estaPago = c.solicitacaoDeFechamento.pago != undefined ? c.solicitacaoDeFechamento.pago : false;
+                    close.mesa = c.mesa;
+                    close.valorTotal = "R$ " + c.solicitacaoDeFechamento.valorTotal.toFixed(2).replace(".",",");
+
+                    this.requestClosesList.push(close);
+
+                    console.log(this.requestClosesList);
+                    
+
+                }
+            })
+        }
+    }
+
     consultarPorCnpj(): any {
         let list = Array<Entity>();
         list = [];
@@ -103,7 +139,6 @@ export class EntityService {
     }
 
     saveEntity(entity: Entity) {
-        //this.generatTables(entity);
         if (entity.logo == '' || entity.logo == null) {
             entity.logo = 'gs://comandavirtual-15db8.appspot.com/undefined/help-web-button.png'
         }
@@ -165,7 +200,8 @@ export class EntityService {
             telefones: entity.telefones,
             logo: entity.logo,
             itens: entity.itens != null ? entity.itens : new Array<Item>(),
-            quantidadeDeMesas: entity.quantidadeDeMesas
+            quantidadeDeMesas: entity.quantidadeDeMesas,
+            valoresAdicionais: entity.valoresAdicionais
         });
 
         this.saveUser(entity.login.email);
@@ -246,26 +282,43 @@ export class EntityService {
         this.alterOrderSelected();
     }
 
-    generatTables(entity: Entity) {
-        // entity.mesas = new Array<Tables>();
-        // for (let index = 1; index <= entity.quantidadeDeMesas; index++) {
-        //     let newTable = new Tables();
-        //     newTable.numero = "" + index;
-        //     entity.mesas.push(newTable);
-        // }
+
+
+
+    saveAdditional(additional: AdditionalValues) {
+        if (!additional.id) {
+            additional.id = v1()
+            if (!this.entitySelected.valoresAdicionais) {
+                this.entitySelected.valoresAdicionais = [];
+            }
+            this.entitySelected.valoresAdicionais.push(additional)
+        } else {
+            for (let i = 0; i < this.entitySelected.valoresAdicionais.length; i++) {
+                if (this.entitySelected.valoresAdicionais[i].id == additional.id) {
+                    this.entitySelected.valoresAdicionais[i] = additional;
+                }
+            }
+        }
+
+        this.saveEntity(this.entitySelected);
+
     }
 
-    getTableByNumber(numero: string) {
 
 
-    }
+    payment(close: ClosingRequestToForm) {
 
+        this.entitySelected.pedidos.forEach(pedido =>{
+            
+            if(pedido.numeroDoPedido == close.numeroDoPedido){
+                pedido.solicitacaoDeFechamento.pago = true;
+                let path = 'empresas/' + this.entitySelected.$key + '/pedidos/' + this.orderSelected.numeroDoPedido+'/solicitacaoDeFechamento/';
+               this.firebaseDb.object(path).set({ ...pedido.solicitacaoDeFechamento });
+            }
 
-    getOrderByEmail(email: string) {
-        // if (this.tableSelected.pedidos) {
-        //     this.orderSelected = this.tableSelected.pedidos
-        //         .find(c => c.emailDoCliente == email);
-        // }
+        })
+
+        
     }
 
 }

@@ -30,6 +30,7 @@
     "md-data-table": "^2.2.0",
     "ngx-spinner": "^1.1.0",
     "rxjs": "^5.5.6",
+    "uuid": "^3.2.1",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+import { AdditionalValues } from './additional-values';
 import { Order } from './order';
 import { Login } from "./login";
 import { Item } from "./item";
@@ -27,6 +28,7 @@ export class Entity {
     itens:Item[];
     quantidadeDeMesas:number;
     pedidos:Order[];
+    valoresAdicionais:AdditionalValues[]
 
     copyTo(entity: Entity) {
         

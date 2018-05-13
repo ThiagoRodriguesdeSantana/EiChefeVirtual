@@ -1,0 +1,31 @@
+<div class="mat-elevation-z8">
+    <mat-table #table [dataSource]="entityService.entitySelected.valoresAdicionais">
+  
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="ativo">
+        <mat-header-cell *matHeaderCellDef>
+          <label>Ativo</label>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox 
+          [(ngModel)]="row.ativo">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="descricao">
+        <mat-header-cell *matHeaderCellDef> Descrição </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.descricao}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="valor">
+        <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.valor}} <label *ngIf="element.percentual">%</label> <label *ngIf="!element.percentual">R$</label></mat-cell>
+      </ng-container>
+
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="getSelectedRow(row)">
+      </mat-row>
+    </mat-table>
+  </div>
