@@ -18,10 +18,6 @@ import { v1 } from 'uuid';
 @Injectable()
 export class EntityService {
 
-
-
-
-
     CLIENTES = 'clientes';
     clientesList: AngularFireList<any>;
     orderSelected: Order;
@@ -30,6 +26,7 @@ export class EntityService {
     entityLoeaded$ = this.entity.asObservable();
     validate: EntityValidate;
     requestClosesList: ClosingRequestToForm[];
+    allOrder:Order[];
 
 
     entitySelected: Entity;
@@ -101,8 +98,16 @@ export class EntityService {
 
 
     getClosingRequest(orders: Order[]) {
-        let request = orders.filter(c=> !c.solicitacaoDeFechamento.pago)
-        if (request) {
+        this.allOrder = orders;
+        
+        let existRequest = orders.find(c=> c.solicitacaoDeFechamento != null);
+        if(!existRequest){
+            return;
+        }
+
+        let request = orders.filter(c=> c.solicitacaoDeFechamento.pago == false)
+
+        if (request && request.length) {
 
             
             request.forEach(c => {
@@ -113,14 +118,12 @@ export class EntityService {
                     close.estaPago = c.solicitacaoDeFechamento.pago != undefined ? c.solicitacaoDeFechamento.pago : false;
                     close.mesa = c.mesa;
                     close.valorTotal = "R$ " + c.solicitacaoDeFechamento.valorTotal.toFixed(2).replace(".",",");
-
                     this.requestClosesList.push(close);
-
                     console.log(this.requestClosesList);
-                    
-
                 }
             })
+        }else{
+            this.requestClosesList = [];
         }
     }
 
@@ -308,11 +311,11 @@ export class EntityService {
 
     payment(close: ClosingRequestToForm) {
 
-        this.entitySelected.pedidos.forEach(pedido =>{
+        this.allOrder.forEach(pedido =>{
             
             if(pedido.numeroDoPedido == close.numeroDoPedido){
                 pedido.solicitacaoDeFechamento.pago = true;
-                let path = 'empresas/' + this.entitySelected.$key + '/pedidos/' + this.orderSelected.numeroDoPedido+'/solicitacaoDeFechamento/';
+                let path = 'empresas/' + this.entitySelected.$key + '/pedidos/' + pedido.numeroDoPedido +'/solicitacaoDeFechamento/';
                this.firebaseDb.object(path).set({ ...pedido.solicitacaoDeFechamento });
             }
 

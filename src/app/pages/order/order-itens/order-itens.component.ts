@@ -34,7 +34,8 @@ export class OrderItensComponent implements OnInit {
   finalize(){
     try {
       this.entityService.finalizeOrder();
-      alert('Pedido finalizado com sucesso!')
+      alert('Pedido finalizado com sucesso!');
+      
     } catch (error) {
      alert(error) 
     }

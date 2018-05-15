@@ -47,7 +47,6 @@ export class OrderComponent implements OnInit {
     if(event){
       
       this.selectedOrder = true;
-       //this.table = this.entityService.tableSelected;
        console.log(event);
     }
   }

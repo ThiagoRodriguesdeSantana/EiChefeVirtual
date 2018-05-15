@@ -2,7 +2,8 @@
     <div class="container">
       <ul class="list-inline">
         <li class="list-inline-item" *ngFor="let row of entityService.requestClosesList; let i = index">
-          <div class="card">
+          <br>
+          <div class="card cardPedido">
             <div class="card-body" (click)="getSelectedRow(row)">
               <h4 class="card-title">Mesa: 0{{row.mesa}}</h4>
               <h5>Valor:{{row.valorTotal}}</h5>

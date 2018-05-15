@@ -12,24 +12,30 @@ import { NgForm } from '@angular/forms';
 })
 export class SolicitacoesDePagamentoComponent implements OnInit {
 
+  selectedLine: boolean;
   closingSelected: ClosingRequestToForm;
-  constructor(public entityService: EntityService) { }
+  constructor(public entityService: EntityService) {
+
+  }
 
   ngOnInit() {
     this.entityService.requestClosesList
   }
 
   selected(event:ClosingRequestToForm){
-    this.closingSelected = event;
+    if(event){
+      this.selectedLine = true;
+      this.closingSelected = event;
+    }
   }
 
   pay() {
-
-    if(this.closingSelected.estaPago){
+    if(!this.closingSelected.estaPago){
       let confitm = confirm('O sitema irá fechar automaticamente esta conta, deseja continuar?');
       if(confirm){
         this.entityService.payment(this.closingSelected);
         alert ('Finalizado com sucesso!');
+        this.selectedLine = false;
       }else{
         this.closingSelected.estaPago = false;
       }

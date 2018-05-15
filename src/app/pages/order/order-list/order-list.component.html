@@ -1,7 +1,7 @@
 <div class="container-fluid" id="tabels">
   <div class="container-fluid" id="tabels">
     <ul class="list-inline">
-      <li class="list-inline-item" *ngFor="let item of entityService.entitySelected.pedidos; let i = index">
+      <li class="list-inline-item" *ngFor="let item of entityService.entitySelected.pedidos">
         <div class="card">
           <div class="card-body" (click)="getSelectedRow(item)">
             <h4 class="card-title">Mesa: 0{{item.mesa}}</h4>

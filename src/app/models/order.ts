@@ -3,6 +3,7 @@ import { ItemOrder } from "./itemOrder";
 import { SolicitacaoDeFechamento } from "./solicitacao-de-fechamento";
 
 export class Order {
+
     numeroDoPedido: string;
     itens: ItemOrder[];
     pedidoEmAberto: boolean;
@@ -10,4 +11,5 @@ export class Order {
     horaDoPedido: Date;
     mesa:string;
     solicitacaoDeFechamento: SolicitacaoDeFechamento;
+
 }
