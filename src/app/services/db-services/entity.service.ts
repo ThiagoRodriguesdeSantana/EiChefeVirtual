@@ -1,8 +1,9 @@
+import { PedidoCliente } from './../../models/pedido-cliente';
 import { ClosingRequestToForm } from './../../models/closing-request-to-form';
 import { AdditionalValues } from './../../models/additional-values';
 import { ItemToForm } from './../../models/item-to-form';
 import { Tables } from './../../models/Tables';
-import { element } from 'protractor';
+import { element, promise } from 'protractor';
 import { Entity } from './../../models/entity';
 import { Injectable } from '@angular/core';
 import { reject } from 'q';
@@ -14,9 +15,11 @@ import { EntityValidate } from '../validates/entity-validate';
 import { Order } from '../../models/order';
 import { ItemOrder } from '../../models/itemOrder';
 import { v1 } from 'uuid';
+import { resolve } from 'url';
 
 @Injectable()
 export class EntityService {
+
 
     CLIENTES = 'clientes';
     clientesList: AngularFireList<any>;
@@ -26,7 +29,7 @@ export class EntityService {
     entityLoeaded$ = this.entity.asObservable();
     validate: EntityValidate;
     requestClosesList: ClosingRequestToForm[];
-    allOrder:Order[];
+    allOrder: Order[];
 
 
     entitySelected: Entity;
@@ -99,17 +102,13 @@ export class EntityService {
 
     getClosingRequest(orders: Order[]) {
         this.allOrder = orders;
-        
-        let existRequest = orders.find(c=> c.solicitacaoDeFechamento != null);
-        if(!existRequest){
-            return;
-        }
 
-        let request = orders.filter(c=> c.solicitacaoDeFechamento.pago == false)
+        let request = orders.filter(c => c.solicitacaoDeFechamento.pago == false
+            && c.solicitacaoDeFechamento.solicitado)
 
         if (request && request.length) {
 
-            
+
             request.forEach(c => {
                 if (c.solicitacaoDeFechamento) {
 
@@ -117,12 +116,13 @@ export class EntityService {
                     close.numeroDoPedido = c.numeroDoPedido;
                     close.estaPago = c.solicitacaoDeFechamento.pago != undefined ? c.solicitacaoDeFechamento.pago : false;
                     close.mesa = c.mesa;
-                    close.valorTotal = "R$ " + c.solicitacaoDeFechamento.valorTotal.toFixed(2).replace(".",",");
+                    close.emailDoCliente = c.emailDoCliente;
+                    close.valorTotal = "R$ " + c.solicitacaoDeFechamento.valorTotal.toFixed(2).replace(".", ",");
                     this.requestClosesList.push(close);
                     console.log(this.requestClosesList);
                 }
             })
-        }else{
+        } else {
             this.requestClosesList = [];
         }
     }
@@ -304,24 +304,52 @@ export class EntityService {
         }
 
         this.saveEntity(this.entitySelected);
-
     }
-
-
 
     payment(close: ClosingRequestToForm) {
 
-        this.allOrder.forEach(pedido =>{
-            
-            if(pedido.numeroDoPedido == close.numeroDoPedido){
+        this.allOrder.forEach(pedido => {
+
+            if (pedido.numeroDoPedido == close.numeroDoPedido) {
                 pedido.solicitacaoDeFechamento.pago = true;
-                let path = 'empresas/' + this.entitySelected.$key + '/pedidos/' + pedido.numeroDoPedido +'/solicitacaoDeFechamento/';
-               this.firebaseDb.object(path).set({ ...pedido.solicitacaoDeFechamento });
+                this.alterarPedido(pedido);
+                this.alterarPedidoNoCliente(pedido);
             }
 
-        })
-
-        
+        });
     }
 
+    alterarPedidoNoCliente(pedido: Order) {
+
+        let list = [];
+
+        this.firebaseDb.database
+
+            .ref(this.CLIENTES)
+            .orderByChild('usuario')
+            .equalTo(pedido.emailDoCliente).on("child_added", (snapshot) => {
+                let item = snapshot.val();
+                item.$key = snapshot.key;
+                list.push(item);
+
+                this.alterarStatusDoUsuario(list, pedido);
+
+            });
+    }
+
+    private alterarStatusDoUsuario(list: any[], pedido: Order) {
+        let pedidoCliente = new PedidoCliente();
+        let chave = list[0].$key;
+        pedidoCliente.dataPedido = new Date();
+        pedidoCliente.empresa = this.entitySelected.$key;
+        pedidoCliente.numero = pedido.numeroDoPedido;
+        pedidoCliente.status = false;
+        let path = this.CLIENTES + '/' + chave + '/pedidos/' + pedido.numeroDoPedido + '/';
+        this.firebaseDb.object(path).set({ ...pedidoCliente });
+    }
+
+    private alterarPedido(pedido: Order) {
+        let path = 'empresas/' + this.entitySelected.$key + '/pedidos/' + pedido.numeroDoPedido + '/solicitacaoDeFechamento/';
+        this.firebaseDb.object(path).set({ ...pedido.solicitacaoDeFechamento });
+    }
 }

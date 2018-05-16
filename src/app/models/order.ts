@@ -11,5 +11,4 @@ export class Order {
     horaDoPedido: Date;
     mesa:string;
     solicitacaoDeFechamento: SolicitacaoDeFechamento;
-
 }

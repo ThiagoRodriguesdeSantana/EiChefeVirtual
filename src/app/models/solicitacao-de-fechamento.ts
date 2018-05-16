@@ -12,4 +12,5 @@ export class SolicitacaoDeFechamento {
     valorTotalAdicionais: number;
     adicionais: Adicionais[];
     pago: boolean;
+    solicitado:boolean;
 }
