@@ -9,6 +9,7 @@ export class Entity {
         this.telefones = new Array;
         this.itens = new Array<Item>();
         this.login = new Login();
+        this.valoresAdicionais = [];
     }
 
     $key: string;

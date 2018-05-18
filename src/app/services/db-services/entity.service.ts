@@ -21,6 +21,7 @@ import { resolve } from 'url';
 export class EntityService {
 
 
+
     CLIENTES = 'clientes';
     clientesList: AngularFireList<any>;
     orderSelected: Order;
@@ -75,6 +76,9 @@ export class EntityService {
                     item.$key = snapshot.key;
                     list.push(item as Entity)
                     this.entitySelected = list[0];
+                    if (!this.entitySelected.pedidos) {
+                        return;
+                    }
                     let pedidos = Object.values(this.entitySelected.pedidos);
                     this.getClosingRequest(pedidos)
                     this.entitySelected.pedidos = pedidos.filter(c => c.pedidoEmAberto);
@@ -204,11 +208,15 @@ export class EntityService {
             logo: entity.logo,
             itens: entity.itens != null ? entity.itens : new Array<Item>(),
             quantidadeDeMesas: entity.quantidadeDeMesas,
-            valoresAdicionais: entity.valoresAdicionais
+            valoresAdicionais: this.obterValoresAdicionais(entity.valoresAdicionais)
         });
 
         this.saveUser(entity.login.email);
 
+    }
+
+    obterValoresAdicionais(adicionais: AdditionalValues[]): AdditionalValues[] {
+        return adicionais != null ? adicionais : new Array<AdditionalValues>();
     }
 
     saveUser(email: string) {
