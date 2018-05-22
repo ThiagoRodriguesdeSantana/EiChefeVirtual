@@ -29,7 +29,7 @@ export class EntityService {
     private entity = new BehaviorSubject<Entity>(new Entity());
     entityLoeaded$ = this.entity.asObservable();
     validate: EntityValidate;
-    requestClosesList: ClosingRequestToForm[];
+    requestClosesList: ClosingRequestToForm[] = [];
     allOrder: Order[];
 
 
@@ -41,7 +41,7 @@ export class EntityService {
         this.entitySelected = new Entity();
         this.clientesList = this.firebaseDb.list(this.CLIENTES);
         this.validate = EntityValidate.getInstance();
-        this.requestClosesList = new Array<ClosingRequestToForm>();
+
         this.reloadEntity();
     }
     getAllEntities() {
@@ -122,7 +122,12 @@ export class EntityService {
                     close.mesa = c.mesa;
                     close.emailDoCliente = c.emailDoCliente;
                     close.valorTotal = "R$ " + c.solicitacaoDeFechamento.valorTotal.toFixed(2).replace(".", ",");
-                    this.requestClosesList.push(close);
+
+                    let pedidoJaSalvo = this.requestClosesList.find(x => x.numeroDoPedido == close.numeroDoPedido);
+
+                    if (!pedidoJaSalvo)
+                        this.requestClosesList.push(close);
+
                     console.log(this.requestClosesList);
                 }
             })
