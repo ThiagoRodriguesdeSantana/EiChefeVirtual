@@ -13,7 +13,7 @@ export class ListItemComponent implements OnInit {
   search: string;
   displayedColumns = ['Código', 'Descricao', 'Preço', 'Tipo','Editar/Remover'];
   listNoFilter: Array<Item>;
-  constructor(private entityService: EntityService) { }
+  constructor(public entityService: EntityService) { }
 
   ngOnInit() {
 

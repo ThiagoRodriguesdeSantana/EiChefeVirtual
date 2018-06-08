@@ -8,7 +8,7 @@ import { EntityService } from '../../services/db-services/entity.service';
 })
 export class ItemComponent implements OnInit {
 
-  constructor(private entityService:EntityService) { }
+  constructor(public entityService:EntityService) { }
 
   ngOnInit() {
   }

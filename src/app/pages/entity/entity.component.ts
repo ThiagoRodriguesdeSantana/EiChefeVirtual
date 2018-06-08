@@ -30,9 +30,9 @@ export class EntityComponent implements OnInit {
   indexList: number;
   validate: EntityValidate;
 
-  constructor(private entityService: EntityService,
-    private viacep: ViacepService,
-    private common: CommonService) { }
+  constructor(public entityService: EntityService,
+    public viacep: ViacepService,
+    public common: CommonService) { }
 
   ngOnInit() {
     this.validate = EntityValidate.getInstance();

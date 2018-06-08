@@ -23,7 +23,7 @@ export class OrderComponent implements OnInit {
   table: Tables;
   teste = 'teste de teste'
   
-  constructor(private entityService: EntityService) {
+  constructor(public entityService: EntityService) {
 
   }
 

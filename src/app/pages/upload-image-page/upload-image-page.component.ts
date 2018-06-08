@@ -18,7 +18,7 @@ export class UploadImagePageComponent implements OnInit {
   fetchingImage:boolean = false;
   progress: { percentage: number } = { percentage: 0 };
 
-  constructor(private common:CommonService, private spinner: NgxSpinnerService) { }
+  constructor(public common:CommonService, public spinner: NgxSpinnerService) { }
 
   public loading = false;
   ngOnInit() {

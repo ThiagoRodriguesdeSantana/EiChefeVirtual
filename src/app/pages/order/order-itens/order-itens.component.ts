@@ -17,7 +17,7 @@ export class OrderItensComponent implements OnInit {
   hourOrder:Date;
   @Input() order:Order;
 
-  constructor(private entityService: EntityService) { 
+  constructor(public entityService: EntityService) { 
     this.emailClient = this.entityService.orderSelected.emailDoCliente;
     this.hourOrder = this.entityService.orderSelected.horaDoPedido;
   }

@@ -8,7 +8,7 @@ import { CommonService } from '../../services/common-servces/common.service';
 })
 export class HeaderPageComponent implements OnInit {
 
-  constructor(private common:CommonService) { }
+  constructor(public common:CommonService) { }
 
   ngOnInit() {
   }

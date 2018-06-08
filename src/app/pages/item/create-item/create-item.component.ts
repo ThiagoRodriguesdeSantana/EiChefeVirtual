@@ -22,8 +22,8 @@ export class CreateItemComponent implements OnInit {
   noInfNameItem: boolean;
   noInfDescItem: boolean;
   selected:string
-  constructor(private entityService: EntityService,
-    private common: CommonService) { }
+  constructor(public entityService: EntityService,
+    public common: CommonService) { }
 
   ngOnInit() {
     this.entityService.itemSelected = new Item();

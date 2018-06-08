@@ -11,7 +11,7 @@ import { CommonService } from '../../services/common-servces/common.service';
 export class LoginPageComponent implements OnInit {
 
   login:Login;
-  constructor(private service: CommonService) { }
+  constructor(public service: CommonService) { }
 
   ngOnInit() {
     this.login = new Login();

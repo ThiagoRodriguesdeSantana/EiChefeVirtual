@@ -13,8 +13,8 @@ export class HomeComponent implements OnInit {
   email: string;
   entity: Entity;
   hight:any;
-  constructor(private serviceEntity: EntityService,
-  private common:CommonService) {
+  constructor(public serviceEntity: EntityService,
+    public common:CommonService) {
     this.hight = window.screen.height;
    }
 

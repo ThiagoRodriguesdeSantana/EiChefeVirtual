@@ -17,7 +17,7 @@ export class OrderListComponent implements OnInit {
   dataSource = new MatTableDataSource<Order>(new Array<Order>());
   selection = new SelectionModel<Order>(true, []);
 
-  constructor(private entityService: EntityService) { }
+  constructor(public entityService: EntityService) { }
 
   ngOnInit() {
   }
