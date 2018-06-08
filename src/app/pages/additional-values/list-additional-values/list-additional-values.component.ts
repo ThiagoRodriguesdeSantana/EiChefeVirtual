@@ -20,7 +20,7 @@ export class ListAdditionalValuesComponent implements OnInit {
 
   type:string;
   @Output() additionalSelected = new EventEmitter<AdditionalValues>();
-  constructor(private entityService: EntityService) { }
+  constructor(public entityService: EntityService) { }
 
   ngOnInit() {
   }

@@ -13,7 +13,7 @@ export class AdditionalValuesComponent implements OnInit {
   tipo: string;
   additionalValues: AdditionalValues;
 
-  constructor(private entityService: EntityService) {
+  constructor(public entityService: EntityService) {
     this.additionalValues = new AdditionalValues();
   }
 
